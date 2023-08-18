@@ -1,4 +1,6 @@
-import 'package:action/components/blurred_app_bar.dart';
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:action/components/poster.dart';
 import 'package:flutter/material.dart';
 
@@ -2493,14 +2495,46 @@ const details = {
   }
 };
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  final _scrollController = ScrollController();
+
+  var _titleOpacity = 0.0;
+
+  void _scrollListener() {
+    setState(() {
+      if (_scrollController.offset > 250) {
+        _titleOpacity = min(1, (_scrollController.offset - 250) / 100);
+      } else {
+        _titleOpacity = 0.0;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _scrollController.addListener(_scrollListener);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   Widget buildCredits(BuildContext context, List people) {
     return SizedBox(
       height: 280,
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: 5, right: 5),
+        padding: const EdgeInsets.only(top: 5, right: 0, left: 10),
         scrollDirection: Axis.horizontal,
         itemCount: (details["credits"] as Map)["cast"].length,
         itemBuilder: (BuildContext context, int index) {
@@ -2560,90 +2594,163 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: const BlurredAppBar(
-        title: "",
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(8, 110, 8, 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    Widget flexibleSpace = Stack(
+      children: [
+        Opacity(
+          opacity: 1 - _titleOpacity,
+          child: FlexibleSpaceBar(
+            background: Stack(
+              fit: StackFit.expand,
               children: [
-                Container(
+                Poster(
+                  imagePath: details["backdrop_path"] as String,
+                  height: 350,
+                  width: double.infinity,
+                ),
+                DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Poster(
-                    imagePath: details["poster_path"] as String,
-                    width: 150,
-                    height: 225,
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.8),
+                        Colors.black.withOpacity(0.5)
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        details["title"] as String,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            DateTime.parse(details['release_date'] as String)
-                                .year
-                                .toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.grey,
-                                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            spreadRadius: 10,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
                           ),
-                          Row(children: [
-                            const Icon(Icons.star,
-                                color: Colors.yellow, size: 10),
-                            const SizedBox(width: 2),
-                            Text(
-                              details['vote_average'].toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    color: Colors.grey,
-                                  ),
-                            )
-                          ])
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        details['overview'] as String,
-                        maxLines: 7,
-                        overflow: TextOverflow.ellipsis,
+                      child: Poster(
+                        imagePath: details["poster_path"] as String,
+                        height: 180,
+                        width: 120,
                       ),
-                    ],
-                  ),
-                )
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      details["title"] as String,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Icon(Icons.calendar_month, size: 10),
+                          const SizedBox(width: 2),
+                          Text(
+                            DateTime.parse(details["release_date"] as String)
+                                .year
+                                .toString(),
+                          ),
+                          const SizedBox(width: 10),
+                          const Icon(Icons.watch_later_outlined, size: 10),
+                          const SizedBox(width: 2),
+                          Text(
+                            "${details["runtime"].toString()} min",
+                          ),
+                          const SizedBox(width: 10),
+                          const Icon(Icons.star, size: 10),
+                          const SizedBox(width: 2),
+                          Text(
+                            details["vote_average"].toString(),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-            const SizedBox(height: 10),
-            Text("Cast", style: Theme.of(context).textTheme.headlineSmall),
-            buildCredits(context, (details["credits"] as Map)["cast"]),
-            const SizedBox(height: 10),
-            Text("Crew", style: Theme.of(context).textTheme.headlineSmall),
-            buildCredits(context, (details["credits"] as Map)["crew"]),
-          ],
+            stretchModes: const [
+              StretchMode.zoomBackground,
+              StretchMode.blurBackground,
+            ],
+          ),
         ),
+        Opacity(
+          opacity: _titleOpacity,
+          child: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+    return Scaffold(
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          SliverAppBar(
+            backgroundColor:
+                Theme.of(context).colorScheme.background.withAlpha(200),
+            title: Text(
+              details["title"] as String,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(color: Colors.white.withOpacity(_titleOpacity)),
+            ),
+            expandedHeight: 350,
+            pinned: true,
+            stretch: true,
+            flexibleSpace: flexibleSpace,
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Cast",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                buildCredits(context, (details["credits"] as Map)["cast"]),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Crew",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                buildCredits(context, (details["credits"] as Map)["crew"]),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Crew",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                buildCredits(context, (details["credits"] as Map)["crew"]),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Crew",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                buildCredits(context, (details["credits"] as Map)["crew"]),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
