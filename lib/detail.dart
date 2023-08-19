@@ -2506,6 +2506,7 @@ class _DetailPageState extends State<DetailPage> {
   final _scrollController = ScrollController();
 
   var _titleOpacity = 0.0;
+  var _displayHours = false;
 
   void _scrollListener() {
     setState(() {
@@ -2594,6 +2595,12 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // convert running time to hours and minutes
+    var runtime = (details["runtime"] as int);
+    var hours = runtime ~/ 60;
+    var minutes =
+        runtime % 60 < 10 ? "0${runtime % 60}" : (runtime % 60).toString();
+
     Widget flexibleSpace = Stack(
       children: [
         Opacity(
@@ -2648,27 +2655,34 @@ class _DetailPageState extends State<DetailPage> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(Icons.calendar_month, size: 10),
-                          const SizedBox(width: 2),
-                          Text(
-                            DateTime.parse(details["release_date"] as String)
-                                .year
-                                .toString(),
+                          Row(children: [
+                            const Icon(Icons.calendar_month, size: 10),
+                            const SizedBox(width: 2),
+                            Text(
+                              DateTime.parse(details["release_date"] as String)
+                                  .year
+                                  .toString(),
+                            ),
+                          ]),
+                          Row(
+                            children: [
+                              const Icon(Icons.watch_later_outlined, size: 10),
+                              const SizedBox(width: 2),
+                              _displayHours
+                                  ? Text("$hours:$minutes")
+                                  : Text(
+                                      "${details["runtime"].toString()} min"),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          const Icon(Icons.watch_later_outlined, size: 10),
-                          const SizedBox(width: 2),
-                          Text(
-                            "${details["runtime"].toString()} min",
+                          Row(
+                            children: [
+                              const Icon(Icons.star, size: 10),
+                              const SizedBox(width: 2),
+                              Text(details["vote_average"].toString()),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          const Icon(Icons.star, size: 10),
-                          const SizedBox(width: 2),
-                          Text(
-                            details["vote_average"].toString(),
-                          )
                         ],
                       ),
                     ),
@@ -2701,6 +2715,16 @@ class _DetailPageState extends State<DetailPage> {
         controller: _scrollController,
         slivers: [
           SliverAppBar(
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.push_pin),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.share),
+                onPressed: () {},
+              ),
+            ],
             backgroundColor:
                 Theme.of(context).colorScheme.background.withAlpha(200),
             title: Text(
@@ -2722,24 +2746,23 @@ class _DetailPageState extends State<DetailPage> {
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
+                  child: Text("Summary",
+                      style: Theme.of(context).textTheme.headlineSmall),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    details["overview"] as String,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text("Cast",
                       style: Theme.of(context).textTheme.headlineSmall),
                 ),
                 buildCredits(context, (details["credits"] as Map)["cast"]),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Crew",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ),
-                buildCredits(context, (details["credits"] as Map)["crew"]),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Crew",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ),
-                buildCredits(context, (details["credits"] as Map)["crew"]),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
