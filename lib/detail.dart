@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:action/components/poster.dart';
+import 'package:action/person.dart';
 import 'package:flutter/material.dart';
 
 const details = {
@@ -2535,7 +2536,7 @@ class _DetailPageState extends State<DetailPage> {
     return SizedBox(
       height: 280,
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: 5, right: 0, left: 10),
+        padding: const EdgeInsets.only(top: 5, right: 0, left: 5),
         scrollDirection: Axis.horizontal,
         itemCount: (details["credits"] as Map)["cast"].length,
         itemBuilder: (BuildContext context, int index) {
@@ -2553,21 +2554,23 @@ class _DetailPageState extends State<DetailPage> {
           }
 
           return InkWell(
+            onTap: () {
+              // Navigate to PersonPage
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const PersonPage(),
+              ));
+            },
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
             key: ValueKey(id),
             child: Container(
               width: 150,
-              margin: const EdgeInsets.fromLTRB(0, 5, 10, 5),
+              margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child:
-                        Poster(imagePath: imagePath, height: 225, width: 150),
-                  ),
+                  Poster(imagePath: imagePath, height: 225, width: 150),
                   const SizedBox(height: 5),
                   Text(
                     people[index]["name"] as String,

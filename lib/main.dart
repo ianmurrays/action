@@ -15,6 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -227,16 +228,10 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: Poster(
-                        imagePath: posterPath,
-                        width: 140,
-                        height: 210,
-                      ),
+                    Poster(
+                      imagePath: posterPath,
+                      width: 140,
+                      height: 210,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8, left: 5, right: 5),

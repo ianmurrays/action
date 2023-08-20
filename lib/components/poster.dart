@@ -23,22 +23,29 @@ class Poster extends StatelessWidget {
             height: height,
             width: width,
           )
-        : CachedNetworkImage(
-            fadeInDuration: Duration.zero,
-            fadeOutDuration: Duration.zero,
-            imageUrl: "https://image.tmdb.org/t/p/original$imagePath",
-            fit: BoxFit.cover,
-            height: height,
-            width: width,
-            placeholder: (context, url) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[500],
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                height: height,
-                width: width,
-              );
-            });
+        : Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: CachedNetworkImage(
+              fadeInDuration: Duration.zero,
+              fadeOutDuration: Duration.zero,
+              imageUrl: "https://image.tmdb.org/t/p/original$imagePath",
+              fit: BoxFit.cover,
+              height: height,
+              width: width,
+              placeholder: (context, url) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[500],
+
+                  ),
+                  height: height,
+                  width: width,
+                );
+              },
+            ),
+          );
   }
 }
