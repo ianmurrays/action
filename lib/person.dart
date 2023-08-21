@@ -6203,7 +6203,7 @@ class _PersonPageState extends State<PersonPage> {
           var subtitle = item[titleKey] as String;
 
           return PosterTile(
-            imagePath: item['poster_path'] as String,
+            imagePath: item['poster_path'] as String?,
             title: title,
             subtitle: subtitle,
             onTap: () {
