@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:action/components/poster.dart';
+import 'package:action/components/poster_tile.dart';
 import 'package:action/person.dart';
 import 'package:flutter/material.dart';
 
@@ -2542,6 +2543,7 @@ class _DetailPageState extends State<DetailPage> {
         itemBuilder: (BuildContext context, int index) {
           var id = people[index]["id"];
           var imagePath = people[index]["profile_path"];
+          var title = people[index]["name"] as String;
 
           String subtitle;
 
@@ -2553,43 +2555,17 @@ class _DetailPageState extends State<DetailPage> {
             subtitle = "";
           }
 
-          return InkWell(
+          return PosterTile(
+            key: ValueKey(id),
+            imagePath: imagePath,
+            title: title,
+            subtitle: subtitle,
             onTap: () {
               // Navigate to PersonPage
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const PersonPage(),
               ));
             },
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            key: ValueKey(id),
-            child: Container(
-              width: 150,
-              margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Poster(imagePath: imagePath, height: 225, width: 150),
-                  const SizedBox(height: 5),
-                  Text(
-                    people[index]["name"] as String,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  Text(
-                    subtitle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
           );
         },
       ),
@@ -2742,40 +2718,43 @@ class _DetailPageState extends State<DetailPage> {
             stretch: true,
             flexibleSpace: flexibleSpace,
           ),
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Summary",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    details["overview"] as String,
-                    style: Theme.of(context).textTheme.bodyLarge,
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 50),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Summary",
+                        style: Theme.of(context).textTheme.headlineSmall),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Cast",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ),
-                buildCredits(context, (details["credits"] as Map)["cast"]),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Crew",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                ),
-                buildCredits(context, (details["credits"] as Map)["crew"]),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      details["overview"] as String,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Cast",
+                        style: Theme.of(context).textTheme.headlineSmall),
+                  ),
+                  buildCredits(context, (details["credits"] as Map)["cast"]),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Crew",
+                        style: Theme.of(context).textTheme.headlineSmall),
+                  ),
+                  buildCredits(context, (details["credits"] as Map)["crew"]),
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

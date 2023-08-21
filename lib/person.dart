@@ -1,5 +1,6 @@
 import 'package:action/components/blurred_app_bar.dart';
 import 'package:action/components/poster.dart';
+import 'package:action/components/poster_tile.dart';
 import 'package:action/detail.dart';
 import 'package:flutter/material.dart';
 
@@ -6198,8 +6199,13 @@ class _PersonPageState extends State<PersonPage> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           var item = items[index];
+          var title = item[nameKey] as String;
+          var subtitle = item[titleKey] as String;
 
-          return InkWell(
+          return PosterTile(
+            imagePath: item['poster_path'] as String,
+            title: title,
+            subtitle: subtitle,
             onTap: () {
               Navigator.push(
                 context,
@@ -6208,37 +6214,6 @@ class _PersonPageState extends State<PersonPage> {
                 ),
               );
             },
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            key: ValueKey(item['id']),
-            child: Container(
-              width: 150,
-              margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Poster(
-                      imagePath: item['poster_path'], height: 225, width: 150),
-                  const SizedBox(height: 5),
-                  Text(
-                    item[titleKey],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  Text(
-                    item[nameKey],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
           );
         },
       ),

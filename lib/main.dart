@@ -1,8 +1,8 @@
+import 'package:action/components/movie_tile.dart';
+import 'package:action/search.dart';
 import 'package:flutter/material.dart';
-
-import 'components/blurred_app_bar.dart';
-import 'components/poster.dart';
-import 'detail.dart';
+import 'package:action/components/blurred_app_bar.dart';
+import 'package:action/detail.dart';
 
 void main() {
   runApp(const App());
@@ -210,71 +210,18 @@ class _HomeState extends State<Home> {
             var title = results[index]['title'];
             var year = DateTime.parse(results[index]['release_date']).year;
 
-            return InkWell(
-              key: ValueKey(results[index]['id']),
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const DetailPage(),
-                  ),
-                );
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                width: 140,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Poster(
-                      imagePath: posterPath,
-                      width: 140,
-                      height: 210,
+            return MovieTile(
+                posterPath: posterPath,
+                title: title,
+                year: year.toString(),
+                voteAverage: results[index]['vote_average'].toString(),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const DetailPage(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 5, right: 5),
-                      child: Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(year.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                    color: Colors.grey,
-                                  )),
-                          Row(children: [
-                            const Icon(Icons.star,
-                                color: Colors.yellow, size: 10),
-                            const SizedBox(width: 2),
-                            Text(
-                              results[index]['vote_average'].toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                    color: Colors.grey,
-                                  ),
-                            )
-                          ]),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
+                  );
+                });
           },
         ),
       ),
@@ -285,18 +232,41 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const BlurredAppBar(),
+      appBar: BlurredAppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const SearchPage(),
+              ),
+            );
+          },
+          icon: const Icon(Icons.search),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: Icon(Icons.settings),
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const SearchPage(),
+            ),
+          );
+        },
         child: const Icon(Icons.search),
       ),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 100, top: 110),
         children: [
           ...buildSection(context),
-          // ...buildSection(context),
-          // ...buildSection(context),
-          // ...buildSection(context),
+          ...buildSection(context),
+          ...buildSection(context),
+          ...buildSection(context),
         ],
       ),
     );

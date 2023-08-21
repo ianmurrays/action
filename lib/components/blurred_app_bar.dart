@@ -3,9 +3,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BlurredAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const BlurredAppBar({super.key, this.title = "Action!", this.actions});
+  const BlurredAppBar({
+    super.key,
+    this.title = "Action!",
+    this.actions,
+    this.leading,
+  });
 
   final String title;
+  final Widget? leading;
   final List<Widget>? actions;
 
   @override
@@ -24,6 +30,7 @@ class BlurredAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title),
       centerTitle: true,
       actions: actions,
+      leading: leading,
     );
   }
 
