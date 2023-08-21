@@ -2508,7 +2508,7 @@ class _DetailPageState extends State<DetailPage> {
   final _scrollController = ScrollController();
 
   var _titleOpacity = 0.0;
-  var _displayHours = false;
+  final _displayHours = false;
 
   void _scrollListener() {
     setState(() {
