@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:action/components/blurred_app_bar.dart';
 import 'package:action/components/poster.dart';
 import 'package:action/components/poster_tile.dart';
-import 'package:action/detail.dart';
-import 'package:flutter/material.dart';
+import 'package:action/pages/detail.dart';
 
 const personData = {
   "adult": false,

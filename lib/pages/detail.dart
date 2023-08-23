@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:action/components/poster.dart';
 import 'package:action/components/poster_tile.dart';
-import 'package:action/person.dart';
-import 'package:flutter/material.dart';
+import 'package:action/pages/person.dart';
 
 const details = {
   "adult": false,

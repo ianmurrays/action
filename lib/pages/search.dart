@@ -1,6 +1,6 @@
 import 'package:action/components/movie_tile.dart';
 import 'package:action/components/poster_tile.dart';
-import 'package:action/detail.dart';
+import 'package:action/pages/detail.dart';
 import 'package:flutter/material.dart';
 
 var recentSearches = [
