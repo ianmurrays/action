@@ -214,7 +214,7 @@ class _HomeState extends State<Home> {
                 posterPath: posterPath,
                 title: title,
                 year: year.toString(),
-                voteAverage: results[index]['vote_average'].toString(),
+                voteAverage: results[index]['vote_average'] as double,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(

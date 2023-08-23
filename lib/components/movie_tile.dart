@@ -9,7 +9,7 @@ class MovieTile extends StatelessWidget {
   final String? posterPath;
   final String title;
   final String year;
-  final String voteAverage;
+  final double voteAverage;
 
   final double width;
   final double height;
@@ -66,7 +66,8 @@ class MovieTile extends StatelessWidget {
                       const Icon(Icons.star, color: Colors.yellow, size: 10),
                       const SizedBox(width: 2),
                       Text(
-                        voteAverage,
+                        // round to one decimal place
+                        voteAverage.toStringAsFixed(1),
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: Colors.grey,
                             ),

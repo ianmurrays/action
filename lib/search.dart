@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:action/components/movie_tile.dart';
 import 'package:action/components/poster_tile.dart';
 import 'package:action/detail.dart';
@@ -546,13 +544,7 @@ class _SearchPageState extends State<SearchPage> {
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _searching = false;
-
-        // randomly set it to no results or searchResults
-        if (Random().nextBool()) {
-          _searchResults = noSearchResults;
-        } else {
-          _searchResults = searchResults;
-        }
+        _searchResults = searchResults;
       });
     });
   }
@@ -561,10 +553,6 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
-        // Disable scrolling when no results
-        physics: (_searchResults != null && _searchResults!['results'].isEmpty)
-            ? const NeverScrollableScrollPhysics()
-            : const AlwaysScrollableScrollPhysics(),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           SliverAppBar(
@@ -636,7 +624,7 @@ class _SearchPageState extends State<SearchPage> {
           crossAxisCount: 3,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
-          childAspectRatio: 2 / 4,
+          childAspectRatio: 2 / 4.1,
         ),
         itemCount: _searchResults!['results'].length,
         itemBuilder: (context, index) {
@@ -691,7 +679,7 @@ class _SearchPageState extends State<SearchPage> {
               title: name,
               year: year,
               voteAverage:
-                  _searchResults!['results'][index]['vote_average'].toString(),
+                  _searchResults!['results'][index]['vote_average'].toDouble(),
               width: MediaQuery.of(context).size.width / 3 - 2 * 4,
               height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
               onTap: () {
@@ -716,7 +704,7 @@ class _SearchPageState extends State<SearchPage> {
           crossAxisCount: 3,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
-          childAspectRatio: 2 / 4,
+          childAspectRatio: 2 / 4.1,
         ),
         itemBuilder: (context, index) {
           var posterPath = recentResultsTapped[index]['poster_path'] as String;
@@ -729,7 +717,7 @@ class _SearchPageState extends State<SearchPage> {
             posterPath: posterPath,
             title: title,
             year: year.toString(),
-            voteAverage: recentResultsTapped[index]['vote_average'].toString(),
+            voteAverage: recentResultsTapped[index]['vote_average'] as double,
             width:
                 MediaQuery.of(context).size.width / 3 - 2 * 4, // see delegate
             height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
