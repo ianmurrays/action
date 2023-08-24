@@ -1,13 +1,17 @@
+import 'package:action/router/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:action/pages/home.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final _appRouter = AppRouter();
+
+  App({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(),
+      // routerDelegate: _appRouter.delegate(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -21,7 +25,6 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
-      home: HomePage(),
     );
   }
 }

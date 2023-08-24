@@ -1,8 +1,9 @@
+import 'package:action/router/app_router.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:action/components/blurred_app_bar.dart';
 import 'package:action/components/poster.dart';
 import 'package:action/components/poster_tile.dart';
-import 'package:action/pages/detail.dart';
 
 const personData = {
   "adult": false,
@@ -5995,6 +5996,7 @@ const personData = {
   }
 };
 
+@RoutePage()
 class PersonPage extends StatefulWidget {
   const PersonPage({super.key});
 
@@ -6207,12 +6209,7 @@ class _PersonPageState extends State<PersonPage> {
             title: title,
             subtitle: subtitle,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DetailPage(),
-                ),
-              );
+              AutoRouter.of(context).push(const DetailRoute());
             },
           );
         },

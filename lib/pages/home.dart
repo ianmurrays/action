@@ -1,11 +1,13 @@
 import 'package:action/pages/home/section.dart';
 import 'package:action/providers/tmdb.dart';
+import 'package:action/router/app_router.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:action/components/blurred_app_bar.dart';
-import 'package:action/pages/search.dart';
 
+@RoutePage()
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
 
@@ -21,11 +23,7 @@ class HomePage extends HookConsumerWidget {
       appBar: BlurredAppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const SearchPage(),
-              ),
-            );
+            AutoRouter.of(context).push(const SearchRoute());
           },
           icon: const Icon(Icons.search),
         ),
@@ -38,11 +36,7 @@ class HomePage extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const SearchPage(),
-            ),
-          );
+          AutoRouter.of(context).push(const SearchRoute());
         },
         child: const Icon(Icons.search),
       ),

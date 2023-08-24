@@ -1,5 +1,6 @@
 import 'package:action/components/movie_tile.dart';
-import 'package:action/pages/detail.dart';
+import 'package:action/router/app_router.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class Entry {
@@ -52,11 +53,7 @@ class Section extends StatelessWidget {
                     year: year.toString(),
                     voteAverage: voteAverage,
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const DetailPage(),
-                        ),
-                      );
+                      AutoRouter.of(context).push(const DetailRoute());
                     });
               },
             ),
