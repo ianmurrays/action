@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Poster extends StatelessWidget {
   final String? imagePath;
@@ -35,14 +36,18 @@ class Poster extends StatelessWidget {
               fit: BoxFit.cover,
               height: height,
               width: width,
+              maxHeightDiskCache: 700,
               placeholder: (context, url) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[500],
-
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[300]!,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[500],
+                    ),
+                    height: height,
+                    width: width,
                   ),
-                  height: height,
-                  width: width,
                 );
               },
             ),

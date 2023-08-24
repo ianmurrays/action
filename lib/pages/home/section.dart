@@ -36,6 +36,9 @@ class Section extends StatelessWidget {
           SizedBox(
             height: 295,
             child: ListView.builder(
+              prototypeItem:
+                  const MovieTile(title: '', year: '', voteAverage: 0),
+              // itemExtent: 140,
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               itemCount: entries.length,

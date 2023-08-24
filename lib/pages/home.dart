@@ -3,9 +3,9 @@ import 'package:action/providers/tmdb.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:action/components/blurred_app_bar.dart';
+import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
 class HomePage extends HookConsumerWidget {
@@ -125,48 +125,34 @@ class HomePage extends HookConsumerWidget {
   }
 }
 
-class _LoadingSection extends HookConsumerWidget {
+class _LoadingSection extends StatelessWidget {
   const _LoadingSection();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final animation = useAnimationController(
-      duration: const Duration(milliseconds: 1000),
-      initialValue: 0.3,
-      lowerBound: 0.3,
-      upperBound: 0.8,
-    );
-
-    useEffect(() {
-      animation.repeat(reverse: true);
-      return null;
-    }, []);
+  Widget build(BuildContext context) {
+    final baseColor = Colors.grey[500]!;
+    final highlightColor = Colors.grey[300]!;
 
     return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            // add a white box to simulate the loading state
-            child: AnimatedBuilder(
-              animation: animation,
-              builder: (context, child) => Opacity(
-                opacity: animation.value,
-                child: child,
-              ),
-              child: SizedBox(
-                width: 200,
-                height: 30,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              // add a white box to simulate the loading state
+              child: Shimmer.fromColors(
+                baseColor: baseColor,
+                highlightColor: highlightColor,
+                child: SizedBox(
+                    width: 200,
+                    height: 30,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    )),
+              )),
           const SizedBox(height: 10),
           SizedBox(
             height: 210,
@@ -174,14 +160,11 @@ class _LoadingSection extends HookConsumerWidget {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               itemBuilder: (context, index) {
-                return AnimatedBuilder(
-                  animation: animation,
-                  builder: (context, child) => Opacity(
-                    opacity: animation.value,
-                    child: child,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Shimmer.fromColors(
+                    baseColor: baseColor,
+                    highlightColor: highlightColor,
                     child: SizedBox(
                       width: 140,
                       height: 210,
