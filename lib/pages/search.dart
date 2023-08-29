@@ -639,7 +639,7 @@ class _SearchPageState extends State<SearchPage> {
               width: MediaQuery.of(context).size.width / 3 - 2 * 4,
               height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
               onTap: () {
-                AutoRouter.of(context).push(const DetailRoute());
+                AutoRouter.of(context).push(MovieDetailRoute(movieId: 0));
               },
             );
           } else {
@@ -681,7 +681,7 @@ class _SearchPageState extends State<SearchPage> {
               width: MediaQuery.of(context).size.width / 3 - 2 * 4,
               height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
               onTap: () {
-                AutoRouter.of(context).push(const DetailRoute());
+                AutoRouter.of(context).push(MovieDetailRoute(movieId: 0));
               },
             );
           }
@@ -716,7 +716,7 @@ class _SearchPageState extends State<SearchPage> {
                 MediaQuery.of(context).size.width / 3 - 2 * 4, // see delegate
             height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
             onTap: () {
-              AutoRouter.of(context).push(const DetailRoute());
+              AutoRouter.of(context).push(MovieDetailRoute(movieId: 0));
             },
           );
         },

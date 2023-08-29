@@ -1,5 +1,8 @@
+import 'package:action/models/cast.dart';
 import 'package:action/models/movie.dart';
+import 'package:action/models/person.dart';
 import 'package:action/models/tv_show.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -41,4 +44,23 @@ Future<List<TvShow>> topRatedTvShows(TopRatedTvShowsRef ref) async {
   final tmdb = ref.read(tmdbApiProvider);
   final response = await tmdb.v3.tv.getTopRated();
   return response['results'].map<TvShow>((e) => TvShow.fromJson(e)).toList();
+}
+
+@riverpod
+Future<Movie> movieDetails(MovieDetailsRef ref, int id) async {
+  final tmdb = ref.read(tmdbApiProvider);
+  final response =
+      await tmdb.v3.movies.getDetails(id, appendToResponse: 'credits');
+  return Movie.fromJson(response as Map<String, dynamic>);
+}
+
+@riverpod
+Future<Person> personDetails(PersonDetailsRef ref, int id) async {
+  final tmdb = ref.read(tmdbApiProvider);
+  final response = await tmdb.v3.people.getDetails(id,
+      appendToResponse: [
+        'movie_credits',
+        'tv_credits',
+      ].join(','));
+  return Person.fromJson(response as Map<String, dynamic>);
 }

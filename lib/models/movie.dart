@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:action/models/credits.dart';
 import 'package:action/models/genre.dart';
 import 'package:action/models/production_company.dart';
 import 'package:action/models/production_country.dart';
@@ -31,6 +32,7 @@ class Movie {
   final bool? video;
   final double? voteAverage;
   final int? voteCount;
+  final Credits? credits;
 
   Movie({
     this.adult,
@@ -58,6 +60,7 @@ class Movie {
     this.video,
     this.voteAverage,
     this.voteCount,
+    this.credits,
   });
 
   factory Movie.fromRawJson(String str) => Movie.fromJson(json.decode(str));
@@ -103,6 +106,8 @@ class Movie {
         video: json["video"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
+        credits:
+            json["credits"] == null ? null : Credits.fromJson(json["credits"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -140,5 +145,6 @@ class Movie {
         "video": video,
         "vote_average": voteAverage,
         "vote_count": voteCount,
+        "credits": credits?.toJson(),
       };
 }

@@ -59,6 +59,7 @@ class HomePage extends HookConsumerWidget {
                   title: "Popular Movies",
                   entries: movies
                       .map((movie) => Entry(
+                            movie.id!,
                             movie.title!,
                             movie.posterPath,
                             movie.releaseDate!.year,
@@ -75,6 +76,7 @@ class HomePage extends HookConsumerWidget {
                   title: "Upcoming Movies",
                   entries: movies
                       .map((movie) => Entry(
+                            movie.id!,
                             movie.title!,
                             movie.posterPath,
                             movie.releaseDate!.year,
@@ -91,6 +93,7 @@ class HomePage extends HookConsumerWidget {
                   title: "Popular TV Shows",
                   entries: tvShows
                       .map((tvShow) => Entry(
+                            tvShow.id!,
                             tvShow.name!,
                             tvShow.posterPath,
                             tvShow.firstAirDate!.year,
@@ -107,6 +110,7 @@ class HomePage extends HookConsumerWidget {
                   title: "Top Rated TV Shows",
                   entries: tvShows
                       .map((tvShow) => Entry(
+                            tvShow.id!,
                             tvShow.name!,
                             tvShow.posterPath,
                             tvShow.firstAirDate!.year,

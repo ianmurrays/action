@@ -4,12 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class Entry {
+  final int id;
   final String title;
   final String? posterPath;
   final int year;
   final double voteAverage;
 
-  const Entry(this.title, this.posterPath, this.year, this.voteAverage);
+  const Entry(
+      this.id, this.title, this.posterPath, this.year, this.voteAverage);
 }
 
 class Section extends StatelessWidget {
@@ -38,13 +40,13 @@ class Section extends StatelessWidget {
             child: ListView.builder(
               prototypeItem:
                   const MovieTile(title: '', year: '', voteAverage: 0),
-              // itemExtent: 140,
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               itemCount: entries.length,
               itemBuilder: (context, index) {
                 final entry = entries[index];
 
+                final id = entry.id;
                 final posterPath = entry.posterPath;
                 final title = entry.title;
                 final year = entry.year;
@@ -56,7 +58,9 @@ class Section extends StatelessWidget {
                     year: year.toString(),
                     voteAverage: voteAverage,
                     onTap: () {
-                      AutoRouter.of(context).push(const DetailRoute());
+                      // FIXME: not the same route if it's a tv show
+                      AutoRouter.of(context)
+                          .push(MovieDetailRoute(movieId: id));
                     });
               },
             ),
