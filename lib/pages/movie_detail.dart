@@ -75,8 +75,7 @@ class MovieDetailPage extends HookConsumerWidget {
 
     return movie.when(
       error: (e, trace) {
-        debugPrintStack(label: e.toString(), stackTrace: trace);
-        return _LoadingScreen();
+        return const _ErrorScreen();
       },
       loading: () => _LoadingScreen(),
       data: (data) {
@@ -265,6 +264,34 @@ class MovieDetailPage extends HookConsumerWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _ErrorScreen extends StatelessWidget {
+  const _ErrorScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              (['😢', '😓', '🫠', '🙃']..shuffle()).first,
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'An error occurred while loading the movie.',
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

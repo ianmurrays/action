@@ -1,8 +1,6 @@
-import 'package:action/models/cast.dart';
 import 'package:action/models/movie.dart';
 import 'package:action/models/person.dart';
 import 'package:action/models/tv_show.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -62,5 +60,6 @@ Future<Person> personDetails(PersonDetailsRef ref, int id) async {
         'movie_credits',
         'tv_credits',
       ].join(','));
+
   return Person.fromJson(response as Map<String, dynamic>);
 }

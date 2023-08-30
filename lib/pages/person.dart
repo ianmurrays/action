@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:action/providers/tmdb.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
@@ -8,6 +10,7 @@ import 'package:action/components/poster_tile.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
 class PersonPage extends HookConsumerWidget {
@@ -59,9 +62,9 @@ class PersonPage extends HookConsumerWidget {
       debugPrint(e.toString());
       debugPrint(stack.toString());
 
-      return Container();
+      return const Scaffold();
     }, loading: () {
-      return Container();
+      return _LoadingScreen();
     }, data: (data) {
       // Format the birthday using a date formatter
       final birthday = data.birthday != null
@@ -254,5 +257,124 @@ class PersonPage extends HookConsumerWidget {
         ),
       )
     ];
+  }
+}
+
+class _LoadingScreen extends StatelessWidget {
+  final Color baseColor = Colors.grey[500]!;
+  final Color highlightColor = Colors.grey[300]!;
+
+  Widget _shimmer({required double width, required double height}) {
+    return Shimmer.fromColors(
+      baseColor: baseColor,
+      highlightColor: highlightColor,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _personalDetail(BuildContext context, {required String label}) {
+    return [
+      Text(
+        label,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              // bold
+              fontWeight: FontWeight.w700,
+            ),
+      ),
+      _shimmer(width: Random().nextInt(80) + 60, height: 20),
+      const SizedBox(height: 10),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: _shimmer(width: 150, height: 30),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.push_pin),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {},
+          ),
+        ],
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withAlpha(200),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _shimmer(width: 166, height: 250),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ..._personalDetail(context, label: 'Known For'),
+                        ..._personalDetail(context, label: 'Gender'),
+                        ..._personalDetail(context, label: 'Birthday'),
+                        ..._personalDetail(context, label: 'Place of Birth'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                'Biography',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _shimmer(
+                    width: 0.9 * MediaQuery.of(context).size.width,
+                    height: 10,
+                  ),
+                  const SizedBox(height: 5),
+                  _shimmer(
+                    width: 0.85 * MediaQuery.of(context).size.width,
+                    height: 10,
+                  ),
+                  const SizedBox(height: 5),
+                  _shimmer(
+                    width: 0.95 * MediaQuery.of(context).size.width,
+                    height: 10,
+                  ),
+                  const SizedBox(height: 5),
+                  _shimmer(
+                    width: 0.50 * MediaQuery.of(context).size.width,
+                    height: 10,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
