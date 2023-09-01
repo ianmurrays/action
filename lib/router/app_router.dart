@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:action/pages/home.dart';
 import 'package:action/pages/movie_detail.dart';
+import 'package:action/pages/tv_show_detail.dart';
 import 'package:action/pages/person.dart';
 import 'package:action/pages/search.dart';
 
@@ -13,6 +14,7 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: HomeRoute.page, initial: true),
         AutoRoute(page: MovieDetailRoute.page),
+        AutoRoute(page: TVShowDetailRoute.page),
         AutoRoute(page: PersonRoute.page),
         AutoRoute(page: SearchRoute.page),
       ];

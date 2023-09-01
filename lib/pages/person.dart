@@ -12,6 +12,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
+enum CreditType { movie, tv }
+
 @RoutePage()
 class PersonPage extends HookConsumerWidget {
   final int personId;
@@ -168,6 +170,7 @@ class PersonPage extends HookConsumerWidget {
               const SizedBox(height: 10),
               ...buildCredits(
                 context,
+                type: CreditType.movie,
                 title: 'Movies',
                 items: (data.movieCredits?.cast ?? [])
                     .map((e) => {
@@ -180,6 +183,7 @@ class PersonPage extends HookConsumerWidget {
               ),
               ...buildCredits(
                 context,
+                type: CreditType.tv,
                 title: 'TV Shows',
                 items: (data.tvCredits?.cast ?? [])
                     .map((e) => {
@@ -192,6 +196,7 @@ class PersonPage extends HookConsumerWidget {
               ),
               ...buildCredits(
                 context,
+                type: CreditType.movie,
                 title: 'Movies (as crew)',
                 items: (data.movieCredits?.crew ?? [])
                     .map((e) => {
@@ -204,6 +209,7 @@ class PersonPage extends HookConsumerWidget {
               ),
               ...buildCredits(
                 context,
+                type: CreditType.tv,
                 title: 'TV Shows (as crew)',
                 items: (data.tvCredits?.crew ?? [])
                     .map((e) => {
@@ -222,7 +228,11 @@ class PersonPage extends HookConsumerWidget {
   }
 
   List<Widget> buildCredits(BuildContext context,
-      {required String title, required List<Map<String, dynamic>> items}) {
+      {
+    required String title,
+    required List<Map<String, dynamic>> items,
+    required CreditType type,
+  }) {
     if (items.isEmpty) {
       return [];
     }
@@ -249,8 +259,15 @@ class PersonPage extends HookConsumerWidget {
               title: item['title'] ?? '',
               subtitle: item['subtitle'],
               onTap: () {
-                AutoRouter.of(context)
-                    .push(MovieDetailRoute(movieId: item['id']));
+                if (type == CreditType.movie) {
+                  AutoRouter.of(context).push(
+                    MovieDetailRoute(movieId: item['id']),
+                  );
+                } else {
+                  AutoRouter.of(context).push(
+                    TVShowDetailRoute(tvShowId: item['id']),
+                  );
+                }
               },
             );
           },

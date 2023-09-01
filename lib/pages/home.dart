@@ -57,6 +57,7 @@ class HomePage extends HookConsumerWidget {
               data: (movies) {
                 return Section(
                   title: "Popular Movies",
+                  type: Type.movie,
                   entries: movies
                       .map((movie) => Entry(
                             movie.id!,
@@ -74,6 +75,7 @@ class HomePage extends HookConsumerWidget {
               data: (movies) {
                 return Section(
                   title: "Upcoming Movies",
+                  type: Type.movie,
                   entries: movies
                       .map((movie) => Entry(
                             movie.id!,
@@ -91,6 +93,7 @@ class HomePage extends HookConsumerWidget {
               data: (tvShows) {
                 return Section(
                   title: "Popular TV Shows",
+                  type: Type.tv,
                   entries: tvShows
                       .map((tvShow) => Entry(
                             tvShow.id!,
@@ -108,6 +111,7 @@ class HomePage extends HookConsumerWidget {
               data: (tvShows) {
                 return Section(
                   title: "Top Rated TV Shows",
+                  type: Type.tv,
                   entries: tvShows
                       .map((tvShow) => Entry(
                             tvShow.id!,

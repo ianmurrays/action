@@ -63,3 +63,11 @@ Future<Person> personDetails(PersonDetailsRef ref, int id) async {
 
   return Person.fromJson(response as Map<String, dynamic>);
 }
+
+@riverpod
+Future<TvShow> tvShowDetails(TvShowDetailsRef ref, int id) async {
+  final tmdb = ref.read(tmdbApiProvider);
+  final response =
+      await tmdb.v3.tv.getDetails(id, appendToResponse: 'aggregate_credits');
+  return TvShow.fromJson(response as Map<String, dynamic>);
+}

@@ -14,14 +14,18 @@ class Entry {
       this.id, this.title, this.posterPath, this.year, this.voteAverage);
 }
 
+enum Type { movie, tv }
+
 class Section extends StatelessWidget {
   final String title;
   final List<Entry> entries;
+  final Type type;
 
   const Section({
     super.key,
     required this.title,
     required this.entries,
+    required this.type,
   });
 
   @override
@@ -58,9 +62,14 @@ class Section extends StatelessWidget {
                     year: year.toString(),
                     voteAverage: voteAverage,
                     onTap: () {
-                      // FIXME: not the same route if it's a tv show
+                      if (type == Type.tv) {
+                        AutoRouter.of(context)
+                            .push(TVShowDetailRoute(tvShowId: id));
+                      } else if (type == Type.movie) {
                       AutoRouter.of(context)
                           .push(MovieDetailRoute(movieId: id));
+
+                      }
                     });
               },
             ),

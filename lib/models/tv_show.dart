@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:action/models/cast.dart';
 import 'package:action/models/created_by.dart';
 import 'package:action/models/genre.dart';
 import 'package:action/models/last_episode_to_air.dart';
@@ -41,6 +42,7 @@ class TvShow {
   final String? type;
   final double? voteAverage;
   final int? voteCount;
+  final AggregateCredits? aggregateCredits;
 
   TvShow({
     this.adult,
@@ -75,6 +77,7 @@ class TvShow {
     this.type,
     this.voteAverage,
     this.voteCount,
+    this.aggregateCredits,
   });
 
   factory TvShow.fromRawJson(String str) => TvShow.fromJson(json.decode(str));
@@ -146,6 +149,9 @@ class TvShow {
         type: json["type"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
+        aggregateCredits: json["aggregate_credits"] == null
+            ? null
+            : AggregateCredits.fromJson(json["aggregate_credits"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -203,5 +209,40 @@ class TvShow {
         "type": type,
         "vote_average": voteAverage,
         "vote_count": voteCount,
+        "aggregate_credits": aggregateCredits?.toJson(),
+      };
+}
+
+class AggregateCredits {
+  final List<Cast>? cast;
+  final List<Cast>? crew;
+
+  AggregateCredits({
+    this.cast,
+    this.crew,
+  });
+
+  factory AggregateCredits.fromRawJson(String str) =>
+      AggregateCredits.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory AggregateCredits.fromJson(Map<String, dynamic> json) =>
+      AggregateCredits(
+        cast: json["cast"] == null
+            ? []
+            : List<Cast>.from(json["cast"]!.map((x) => Cast.fromJson(x))),
+        crew: json["crew"] == null
+            ? []
+            : List<Cast>.from(json["crew"]!.map((x) => Cast.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "cast": cast == null
+            ? []
+            : List<dynamic>.from(cast!.map((x) => x.toJson())),
+        "crew": crew == null
+            ? []
+            : List<dynamic>.from(crew!.map((x) => x.toJson())),
       };
 }

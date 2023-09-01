@@ -41,6 +41,13 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SearchPage(),
       );
     },
+    TVShowDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<TVShowDetailRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: TVShowDetailPage(tvShowId: args.tvShowId),
+      );
+    },
   };
 }
 
@@ -127,4 +134,33 @@ class SearchRoute extends PageRouteInfo<void> {
   static const String name = 'SearchRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TVShowDetailPage]
+class TVShowDetailRoute extends PageRouteInfo<TVShowDetailRouteArgs> {
+  TVShowDetailRoute({
+    required int tvShowId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          TVShowDetailRoute.name,
+          args: TVShowDetailRouteArgs(tvShowId: tvShowId),
+          initialChildren: children,
+        );
+
+  static const String name = 'TVShowDetailRoute';
+
+  static const PageInfo<TVShowDetailRouteArgs> page =
+      PageInfo<TVShowDetailRouteArgs>(name);
+}
+
+class TVShowDetailRouteArgs {
+  const TVShowDetailRouteArgs({required this.tvShowId});
+
+  final int tvShowId;
+
+  @override
+  String toString() {
+    return 'TVShowDetailRouteArgs{tvShowId: $tvShowId}';
+  }
 }

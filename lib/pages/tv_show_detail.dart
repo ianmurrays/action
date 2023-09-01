@@ -3,36 +3,31 @@ import 'package:action/providers/tmdb.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class MovieDetailPage extends HookConsumerWidget {
-  final int movieId;
+class TVShowDetailPage extends HookConsumerWidget {
+  final int tvShowId;
 
   // ignore: use_key_in_widget_constructors
-  const MovieDetailPage({required this.movieId});
+  const TVShowDetailPage({required this.tvShowId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movie = ref.watch(movieDetailsProvider(movieId));
+    final show = ref.watch(tvShowDetailsProvider(tvShowId));
 
-    return movie.when(
+    return show.when(
       error: (_, __) => const _ErrorScreen(),
       loading: () => _LoadingScreen(),
       data: (data) {
-        // convert running time to hours and minutes
-        var hours = data.runtime! ~/ 60;
-        var minutes = data.runtime! % 60 < 10
-            ? "0${data.runtime! % 60}"
-            : (data.runtime! % 60).toString();
-
         return DetailView(
-          title: data.title!,
+          title: data.name!,
           backdropPath: data.backdropPath,
           posterPath: data.posterPath,
           summary: data.overview,
-          cast: data.credits!.cast!,
-          crew: data.credits!.crew!,
+          cast: data.aggregateCredits!.cast ?? [],
+          crew: data.aggregateCredits!.crew ?? [],
           buildMetadata: (context) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -40,14 +35,14 @@ class MovieDetailPage extends HookConsumerWidget {
                 const Icon(Icons.calendar_month, size: 10),
                 const SizedBox(width: 2),
                 Text(
-                  data.releaseDate!.year.toString(),
+                  DateFormat.yMMMMd().format(data.firstAirDate!),
                 ),
               ]),
               Row(
                 children: [
-                  const Icon(Icons.watch_later_outlined, size: 10),
+                  const Icon(Icons.camera_roll, size: 10),
                   const SizedBox(width: 2),
-                  Text("$hours:$minutes"),
+                  Text(data.inProduction! ? 'In Production' : 'Finished'),
                 ],
               ),
               Row(
