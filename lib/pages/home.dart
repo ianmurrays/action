@@ -40,7 +40,7 @@ class HomePage extends HookConsumerWidget {
         },
         child: const Icon(Icons.search),
       ),
-      body: RefreshIndicator(
+      body: RefreshIndicator.adaptive(
         edgeOffset: 110,
         onRefresh: () {
           return Future.wait([

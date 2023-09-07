@@ -4,7 +4,7 @@ import 'package:action/pages/home.dart';
 import 'package:action/pages/movie_detail.dart';
 import 'package:action/pages/tv_show_detail.dart';
 import 'package:action/pages/person.dart';
-import 'package:action/pages/search.dart';
+import 'package:action/pages/search/ui/search.dart';
 
 part 'app_router.gr.dart';
 
