@@ -1,4 +1,4 @@
-import 'package:action/models/search.dart';
+import 'package:action/shared/models/search.dart';
 
 enum SearchViewState {
   idle,

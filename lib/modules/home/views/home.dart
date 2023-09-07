@@ -1,10 +1,10 @@
-import 'package:action/pages/home/section.dart';
-import 'package:action/providers/tmdb.dart';
+import 'package:action/modules/home/ui/section.dart';
+import 'package:action/shared/providers/tmdb.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:action/components/blurred_app_bar.dart';
+import 'package:action/shared/ui/blurred_app_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()

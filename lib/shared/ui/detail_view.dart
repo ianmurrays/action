@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:action/components/credits_list.dart';
-import 'package:action/components/poster.dart';
-import 'package:action/models/cast.dart';
+import 'package:action/shared/ui/credits_list.dart';
+import 'package:action/shared/ui/poster.dart';
+import 'package:action/shared/models/cast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

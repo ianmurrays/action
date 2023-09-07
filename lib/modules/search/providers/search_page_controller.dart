@@ -1,6 +1,6 @@
-import 'package:action/models/search.dart';
-import 'package:action/pages/search/models/search_state.dart';
-import 'package:action/providers/tmdb.dart';
+import 'package:action/shared/models/search.dart';
+import 'package:action/modules/search/models/search_state.dart';
+import 'package:action/shared/providers/tmdb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

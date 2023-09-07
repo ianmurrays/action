@@ -1,5 +1,5 @@
-import 'package:action/components/poster_tile.dart';
-import 'package:action/models/cast.dart';
+import 'package:action/shared/ui/poster_tile.dart';
+import 'package:action/shared/models/cast.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

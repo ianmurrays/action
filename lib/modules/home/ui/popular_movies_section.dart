@@ -1,5 +1,5 @@
-import 'package:action/components/movie_tile.dart';
-import 'package:action/providers/tmdb.dart';
+import 'package:action/shared/ui/movie_tile.dart';
+import 'package:action/shared/providers/tmdb.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

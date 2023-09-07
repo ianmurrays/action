@@ -1,6 +1,6 @@
-import 'package:action/models/movie.dart';
-import 'package:action/models/person.dart';
-import 'package:action/models/tv_show.dart';
+import 'package:action/shared/models/movie.dart';
+import 'package:action/shared/models/person.dart';
+import 'package:action/shared/models/tv_show.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 

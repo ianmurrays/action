@@ -1,33 +1,38 @@
-import 'package:action/components/detail_view.dart';
-import 'package:action/providers/tmdb.dart';
+import 'package:action/shared/ui/detail_view.dart';
+import 'package:action/shared/providers/tmdb.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class TVShowDetailPage extends HookConsumerWidget {
-  final int tvShowId;
+class MovieDetailPage extends HookConsumerWidget {
+  final int movieId;
 
   // ignore: use_key_in_widget_constructors
-  const TVShowDetailPage({required this.tvShowId});
+  const MovieDetailPage({required this.movieId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final show = ref.watch(tvShowDetailsProvider(tvShowId));
+    final movie = ref.watch(movieDetailsProvider(movieId));
 
-    return show.when(
+    return movie.when(
       error: (_, __) => const _ErrorScreen(),
       loading: () => _LoadingScreen(),
       data: (data) {
+        // convert running time to hours and minutes
+        var hours = data.runtime! ~/ 60;
+        var minutes = data.runtime! % 60 < 10
+            ? "0${data.runtime! % 60}"
+            : (data.runtime! % 60).toString();
+
         return DetailView(
-          title: data.name!,
+          title: data.title!,
           backdropPath: data.backdropPath,
           posterPath: data.posterPath,
           summary: data.overview,
-          cast: data.aggregateCredits!.cast ?? [],
-          crew: data.aggregateCredits!.crew ?? [],
+          cast: data.credits!.cast!,
+          crew: data.credits!.crew!,
           buildMetadata: (context) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -35,14 +40,14 @@ class TVShowDetailPage extends HookConsumerWidget {
                 const Icon(Icons.calendar_month, size: 10),
                 const SizedBox(width: 2),
                 Text(
-                  DateFormat.yMMMMd().format(data.firstAirDate!),
+                  data.releaseDate!.year.toString(),
                 ),
               ]),
               Row(
                 children: [
-                  const Icon(Icons.camera_roll, size: 10),
+                  const Icon(Icons.watch_later_outlined, size: 10),
                   const SizedBox(width: 2),
-                  Text(data.inProduction! ? 'In Production' : 'Finished'),
+                  Text("$hours:$minutes"),
                 ],
               ),
               Row(

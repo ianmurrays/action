@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:action/models/cast.dart';
+import 'package:action/shared/models/cast.dart';
 
 class Credits {
   final List<Cast>? cast;

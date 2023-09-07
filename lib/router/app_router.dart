@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 
-import 'package:action/pages/home.dart';
-import 'package:action/pages/movie_detail.dart';
-import 'package:action/pages/tv_show_detail.dart';
-import 'package:action/pages/person.dart';
-import 'package:action/pages/search/ui/search.dart';
+import 'package:action/modules/home/views/home.dart';
+import 'package:action/modules/movie/views/movie_detail.dart';
+import 'package:action/modules/tv_show/views/tv_show_detail.dart';
+import 'package:action/modules/person/views/person.dart';
+import 'package:action/modules/search/views/search.dart';
 
 part 'app_router.gr.dart';
 

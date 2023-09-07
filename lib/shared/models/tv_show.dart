@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:action/models/cast.dart';
-import 'package:action/models/created_by.dart';
-import 'package:action/models/genre.dart';
-import 'package:action/models/last_episode_to_air.dart';
-import 'package:action/models/network.dart';
-import 'package:action/models/production_country.dart';
-import 'package:action/models/season.dart';
-import 'package:action/models/spoken_language.dart';
+import 'package:action/shared/models/cast.dart';
+import 'package:action/shared/models/created_by.dart';
+import 'package:action/shared/models/genre.dart';
+import 'package:action/shared/models/last_episode_to_air.dart';
+import 'package:action/shared/models/network.dart';
+import 'package:action/shared/models/production_country.dart';
+import 'package:action/shared/models/season.dart';
+import 'package:action/shared/models/spoken_language.dart';
 
 class TvShow {
   final bool? adult;

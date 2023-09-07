@@ -1,4 +1,4 @@
-import 'package:action/components/poster.dart';
+import 'package:action/shared/ui/poster.dart';
 import 'package:flutter/material.dart';
 
 typedef OnTapCallback = void Function();

@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:action/providers/tmdb.dart';
+import 'package:action/shared/providers/tmdb.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:action/components/blurred_app_bar.dart';
-import 'package:action/components/poster.dart';
-import 'package:action/components/poster_tile.dart';
+import 'package:action/shared/ui/blurred_app_bar.dart';
+import 'package:action/shared/ui/poster.dart';
+import 'package:action/shared/ui/poster_tile.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';

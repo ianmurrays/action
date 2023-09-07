@@ -1,8 +1,8 @@
-import 'package:action/components/movie_tile.dart';
-import 'package:action/components/poster_tile.dart';
-import 'package:action/models/search.dart';
-import 'package:action/pages/search/models/search_state.dart';
-import 'package:action/pages/search/providers/search_page_controller.dart';
+import 'package:action/shared/ui/movie_tile.dart';
+import 'package:action/shared/ui/poster_tile.dart';
+import 'package:action/shared/models/search.dart';
+import 'package:action/modules/search/models/search_state.dart';
+import 'package:action/modules/search/providers/search_page_controller.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

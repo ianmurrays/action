@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:action/models/credits.dart';
-import 'package:action/models/genre.dart';
-import 'package:action/models/production_company.dart';
-import 'package:action/models/production_country.dart';
-import 'package:action/models/spoken_language.dart';
+import 'package:action/shared/models/credits.dart';
+import 'package:action/shared/models/genre.dart';
+import 'package:action/shared/models/production_company.dart';
+import 'package:action/shared/models/production_country.dart';
+import 'package:action/shared/models/spoken_language.dart';
 
 class Movie {
   final bool? adult;
