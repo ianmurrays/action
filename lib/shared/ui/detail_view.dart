@@ -36,13 +36,17 @@ class DetailView extends HookConsumerWidget {
     final titleOpacity = useState(0.0);
     final showAllSummary = useState(false);
 
-    scrollController.addListener(() {
-      if (scrollController.offset > 250) {
-        titleOpacity.value = min(1, (scrollController.offset - 250) / 100);
-      } else {
-        titleOpacity.value = 0.0;
-      }
-    });
+    useEffect(() {
+      scrollController.addListener(() {
+        if (scrollController.offset > 250) {
+          titleOpacity.value = min(1, (scrollController.offset - 250) / 100);
+        } else {
+          titleOpacity.value = 0.0;
+        }
+      });
+
+      return null;
+    }, []);
 
     return Scaffold(
       body: CustomScrollView(
