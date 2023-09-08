@@ -34,6 +34,7 @@ class DetailView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
     final titleOpacity = useState(0.0);
+    final showAllSummary = useState(false);
 
     scrollController.addListener(() {
       if (scrollController.offset > 250) {
@@ -162,9 +163,17 @@ class DetailView extends HookConsumerWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text(
-                      summary ?? 'No summary available.',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    child: GestureDetector(
+                      onTap: () {
+                        showAllSummary.value = !showAllSummary.value;
+                      },
+                      child: Text(
+                        summary ?? 'No summary available.',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        maxLines: showAllSummary.value ? null : 5,
+                        overflow:
+                            showAllSummary.value ? null : TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
