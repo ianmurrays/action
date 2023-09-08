@@ -1,6 +1,7 @@
 import 'package:action/modules/home/ui/section.dart';
 import 'package:action/modules/home/providers/home.provider.dart';
 import 'package:action/router/app_router.dart';
+import 'package:action/shared/providers/pin.provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +14,7 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pins = ref.watch(pinsProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final popularTvShows = ref.watch(popularTvShowsProvider);
@@ -53,18 +55,37 @@ class HomePage extends HookConsumerWidget {
         child: CustomScrollView(
           slivers: [
             const SliverPadding(padding: EdgeInsets.only(top: 110)),
+            pins.maybeWhen(
+              data: (pins) {
+                return Section(
+                  title: "Pinned Items",
+                  entries: pins
+                      .map((pin) => Entry(
+                            id: pin.tmdbId!,
+                            title: pin.title!,
+                            posterPath: pin.posterPath,
+                            year: pin.year,
+                            voteAverage: pin.voteAverage,
+                            // these two enums match each other, hence we can do this
+                            type: EntryType.values[pin.type.index],
+                          ))
+                      .toList(),
+                );
+              },
+              orElse: () => const _LoadingSection(),
+            ),
             popularMovies.maybeWhen(
               data: (movies) {
                 return Section(
                   title: "Popular Movies",
-                  type: Type.movie,
                   entries: movies
                       .map((movie) => Entry(
-                            movie.id!,
-                            movie.title!,
-                            movie.posterPath,
-                            movie.releaseDate!.year,
-                            movie.voteAverage!,
+                            id: movie.id!,
+                            title: movie.title!,
+                            posterPath: movie.posterPath,
+                            year: movie.releaseDate!.year.toString(),
+                            voteAverage: movie.voteAverage!,
+                            type: EntryType.movie,
                           ))
                       .toList(),
                 );
@@ -75,14 +96,14 @@ class HomePage extends HookConsumerWidget {
               data: (movies) {
                 return Section(
                   title: "Upcoming Movies",
-                  type: Type.movie,
                   entries: movies
                       .map((movie) => Entry(
-                            movie.id!,
-                            movie.title!,
-                            movie.posterPath,
-                            movie.releaseDate!.year,
-                            movie.voteAverage!,
+                            id: movie.id!,
+                            title: movie.title!,
+                            posterPath: movie.posterPath,
+                            year: movie.releaseDate!.year.toString(),
+                            voteAverage: movie.voteAverage!,
+                            type: EntryType.movie,
                           ))
                       .toList(),
                 );
@@ -93,14 +114,14 @@ class HomePage extends HookConsumerWidget {
               data: (tvShows) {
                 return Section(
                   title: "Popular TV Shows",
-                  type: Type.tv,
                   entries: tvShows
                       .map((tvShow) => Entry(
-                            tvShow.id!,
-                            tvShow.name!,
-                            tvShow.posterPath,
-                            tvShow.firstAirDate!.year,
-                            tvShow.voteAverage!,
+                            id: tvShow.id!,
+                            title: tvShow.name!,
+                            posterPath: tvShow.posterPath,
+                            year: tvShow.firstAirDate!.year.toString(),
+                            voteAverage: tvShow.voteAverage!,
+                            type: EntryType.tv,
                           ))
                       .toList(),
                 );
@@ -111,14 +132,14 @@ class HomePage extends HookConsumerWidget {
               data: (tvShows) {
                 return Section(
                   title: "Top Rated TV Shows",
-                  type: Type.tv,
                   entries: tvShows
                       .map((tvShow) => Entry(
-                            tvShow.id!,
-                            tvShow.name!,
-                            tvShow.posterPath,
-                            tvShow.firstAirDate!.year,
-                            tvShow.voteAverage!,
+                            id: tvShow.id!,
+                            title: tvShow.name!,
+                            posterPath: tvShow.posterPath,
+                            year: tvShow.firstAirDate!.year.toString(),
+                            voteAverage: tvShow.voteAverage!,
+                            type: EntryType.tv,
                           ))
                       .toList(),
                 );

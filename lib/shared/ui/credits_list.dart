@@ -15,7 +15,7 @@ class CreditsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 280,
+      height: 295,
       child: ListView.builder(
         padding: const EdgeInsets.only(top: 5, right: 0, left: 5),
         scrollDirection: Axis.horizontal,

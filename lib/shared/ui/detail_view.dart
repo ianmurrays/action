@@ -9,12 +9,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef MetadataBuilder = Widget Function(BuildContext context);
+typedef PinButtonBuilder = Widget Function(BuildContext context);
+
+typedef OnPinTapped = void Function(bool isPinned);
 
 class DetailView extends HookConsumerWidget {
   final String title;
   final String? backdropPath;
   final String? posterPath;
   final MetadataBuilder buildMetadata;
+  final PinButtonBuilder buildPinButton;
   final String? summary;
   final List<Cast> cast;
   final List<Cast> crew;
@@ -25,6 +29,7 @@ class DetailView extends HookConsumerWidget {
     this.backdropPath,
     this.posterPath,
     required this.buildMetadata,
+    required this.buildPinButton,
     this.summary,
     this.cast = const <Cast>[],
     this.crew = const <Cast>[],
@@ -55,10 +60,7 @@ class DetailView extends HookConsumerWidget {
         slivers: [
           SliverAppBar(
             actions: [
-              IconButton(
-                icon: const Icon(Icons.push_pin),
-                onPressed: () {},
-              ),
+              buildPinButton(context),
               IconButton(
                 icon: const Icon(Icons.share),
                 onPressed: () {},

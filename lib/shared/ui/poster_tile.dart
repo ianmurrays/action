@@ -20,8 +20,8 @@ class PosterTile extends StatelessWidget {
     this.imagePath,
     required this.title,
     this.subtitle,
-    this.width = 150,
-    this.height = 225,
+    this.width = 140,
+    this.height = 210,
   });
 
   @override
@@ -32,28 +32,33 @@ class PosterTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: Container(
-        width: 150,
+        width: width,
         margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Poster(imagePath: imagePath, height: height, width: width),
-            const SizedBox(height: 5),
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            if (subtitle != null)
-              Text(
-                subtitle!,
+            Padding(
+              padding: const EdgeInsets.only(top: 8, left: 5),
+              child: Text(
+                title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(color: Colors.grey),
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+            if (subtitle != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  subtitle!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(color: Colors.grey),
+                ),
               ),
           ],
         ),

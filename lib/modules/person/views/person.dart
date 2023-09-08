@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
+import 'package:action/shared/ui/pin_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:action/shared/ui/blurred_app_bar.dart';
@@ -88,10 +90,13 @@ class PersonPage extends HookConsumerWidget {
         appBar: BlurredAppBar(
           title: data.name!,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.push_pin),
-              onPressed: () {},
-            ),
+            PinButton(
+                tmdbId: data.id!,
+                pinBuilderCallback: () => Pin()
+                  ..tmdbId = data.id!
+                  ..type = PinType.person
+                  ..title = data.name!
+                  ..posterPath = data.profilePath!),
             IconButton(
               icon: const Icon(Icons.share),
               onPressed: () {},
@@ -247,7 +252,7 @@ class PersonPage extends HookConsumerWidget {
         ),
       ),
       SizedBox(
-        height: 280,
+        height: 295,
         child: ListView.builder(
           padding: const EdgeInsets.only(right: 5, left: 5),
           scrollDirection: Axis.horizontal,

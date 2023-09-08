@@ -1,5 +1,7 @@
+import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/movie/providers/movie.provider.dart';
 import 'package:action/shared/ui/detail_view.dart';
+import 'package:action/shared/ui/pin_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,6 +35,15 @@ class MovieDetailPage extends HookConsumerWidget {
           summary: data.overview,
           cast: data.credits!.cast!,
           crew: data.credits!.crew!,
+          buildPinButton: (context) => PinButton(
+              tmdbId: data.id!,
+              pinBuilderCallback: () => Pin()
+                ..tmdbId = data.id!
+                ..type = PinType.movie
+                ..title = data.title!
+                ..posterPath = data.posterPath!
+                ..year = data.releaseDate!.year.toString()
+                ..voteAverage = data.voteAverage!),
           buildMetadata: (context) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

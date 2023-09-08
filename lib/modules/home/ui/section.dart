@@ -1,31 +1,37 @@
 import 'package:action/shared/ui/movie_tile.dart';
 import 'package:action/router/app_router.dart';
+import 'package:action/shared/ui/poster_tile.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+
+enum EntryType { movie, tv, person }
 
 class Entry {
   final int id;
   final String title;
   final String? posterPath;
-  final int year;
-  final double voteAverage;
+  final String? year;
+  final double? voteAverage;
+  final EntryType type;
 
-  const Entry(
-      this.id, this.title, this.posterPath, this.year, this.voteAverage);
+  const Entry({
+    required this.id,
+    required this.title,
+    required this.posterPath,
+    this.year,
+    this.voteAverage,
+    required this.type,
+  });
 }
-
-enum Type { movie, tv }
 
 class Section extends StatelessWidget {
   final String title;
   final List<Entry> entries;
-  final Type type;
 
   const Section({
     super.key,
     required this.title,
     required this.entries,
-    required this.type,
   });
 
   @override
@@ -37,7 +43,7 @@ class Section extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child:
-                Text(title, style: Theme.of(context).textTheme.headlineLarge),
+                Text(title, style: Theme.of(context).textTheme.headlineMedium),
           ),
           SizedBox(
             height: 295,
@@ -56,20 +62,32 @@ class Section extends StatelessWidget {
                 final year = entry.year;
                 final voteAverage = entry.voteAverage;
 
-                return MovieTile(
+                if (entry.type == EntryType.movie ||
+                    entry.type == EntryType.tv) {
+                  return MovieTile(
                     posterPath: posterPath,
                     title: title,
                     year: year.toString(),
-                    voteAverage: voteAverage,
+                    voteAverage: voteAverage ?? 0,
                     onTap: () {
-                      if (type == Type.tv) {
+                      if (entry.type == EntryType.tv) {
                         AutoRouter.of(context)
                             .push(TVShowDetailRoute(tvShowId: id));
-                      } else if (type == Type.movie) {
+                      } else if (entry.type == EntryType.movie) {
                         AutoRouter.of(context)
                             .push(MovieDetailRoute(movieId: id));
                       }
-                    });
+                    },
+                  );
+                } else {
+                  return PosterTile(
+                    imagePath: posterPath,
+                    title: title,
+                    onTap: () {
+                      AutoRouter.of(context).push(PersonRoute(personId: id));
+                    },
+                  );
+                }
               },
             ),
           )

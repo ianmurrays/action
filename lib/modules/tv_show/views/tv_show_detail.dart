@@ -1,5 +1,7 @@
+import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/tv_show/providers/tv_show.provider.dart';
 import 'package:action/shared/ui/detail_view.dart';
+import 'package:action/shared/ui/pin_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,6 +30,15 @@ class TVShowDetailPage extends HookConsumerWidget {
           summary: data.overview,
           cast: data.aggregateCredits!.cast ?? [],
           crew: data.aggregateCredits!.crew ?? [],
+          buildPinButton: (context) => PinButton(
+              tmdbId: data.id!,
+              pinBuilderCallback: () => Pin()
+                ..tmdbId = data.id!
+                ..type = PinType.tv
+                ..title = data.name!
+                ..posterPath = data.posterPath!
+                ..year = data.firstAirDate!.year.toString()
+                ..voteAverage = data.voteAverage!),
           buildMetadata: (context) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
