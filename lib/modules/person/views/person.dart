@@ -126,7 +126,8 @@ class PersonPage extends HookConsumerWidget {
                               value: data.knownForDepartment.toString()),
                           ..._personalDetail(context,
                               label: 'Gender', value: _gender(data.gender!)),
-                          ..._personalDetail(context,
+                          if (age != null)
+                            ..._personalDetail(context,
                               label: 'Birthday',
                               value: "$birthday ($age years old)"),
                           ..._personalDetail(context,
