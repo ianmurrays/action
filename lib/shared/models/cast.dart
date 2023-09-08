@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:action/shared/models/role.dart';
+
 class Cast {
   final bool? adult;
   final int? gender;
@@ -9,6 +11,7 @@ class Cast {
   final String? originalName;
   final double? popularity;
   final String? profilePath;
+  final List<Role>? roles;
   final int? castId;
   final String? character;
   final String? creditId;
@@ -25,6 +28,7 @@ class Cast {
     this.originalName,
     this.popularity,
     this.profilePath,
+    this.roles,
     this.castId,
     this.character,
     this.creditId,
@@ -46,6 +50,9 @@ class Cast {
         originalName: json["original_name"],
         popularity: json["popularity"]?.toDouble(),
         profilePath: json["profile_path"],
+        roles: json["roles"] == null
+            ? []
+            : List<Role>.from(json["roles"]!.map((x) => Role.fromJson(x))),
         castId: json["cast_id"],
         character: json["character"],
         creditId: json["credit_id"],
@@ -63,6 +70,9 @@ class Cast {
         "original_name": originalName,
         "popularity": popularity,
         "profile_path": profilePath,
+        "roles": roles == null
+            ? []
+            : List<dynamic>.from(roles!.map((x) => x.toJson())),
         "cast_id": castId,
         "character": character,
         "credit_id": creditId,

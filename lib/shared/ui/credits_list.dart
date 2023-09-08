@@ -30,6 +30,8 @@ class CreditsList extends StatelessWidget {
 
           if (person.character != null) {
             subtitle = person.character!;
+          } else if (person.roles != null && person.roles!.isNotEmpty) {
+            subtitle = person.roles!.map((e) => e.character).join(", ");
           } else if (person.job != null) {
             subtitle = person.job!;
           } else {
