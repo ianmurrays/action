@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:action/shared/providers/tmdb.dart';
+import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

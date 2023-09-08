@@ -1,5 +1,5 @@
+import 'package:action/modules/movie/providers/movie.provider.dart';
 import 'package:action/shared/ui/detail_view.dart';
-import 'package:action/shared/providers/tmdb.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
