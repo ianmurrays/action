@@ -57,6 +57,10 @@ class HomePage extends HookConsumerWidget {
             const SliverPadding(padding: EdgeInsets.only(top: 110)),
             pins.maybeWhen(
               data: (pins) {
+                if (pins.isEmpty) {
+                  return const SliverToBoxAdapter();
+                }
+
                 return Section(
                   title: "Pinned Items",
                   entries: pins
