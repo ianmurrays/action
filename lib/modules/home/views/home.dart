@@ -191,7 +191,7 @@ class _LoadingSection extends StatelessWidget {
             height: 210,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 10),
