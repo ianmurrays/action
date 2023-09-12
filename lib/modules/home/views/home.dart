@@ -2,6 +2,7 @@ import 'package:action/modules/home/ui/section.dart';
 import 'package:action/modules/home/providers/home.provider.dart';
 import 'package:action/router/app_router.dart';
 import 'package:action/shared/providers/pin.provider.dart';
+import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -36,12 +37,7 @@ class HomePage extends HookConsumerWidget {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AutoRouter.of(context).push(const SearchRoute());
-        },
-        child: const Icon(Icons.search),
-      ),
+      floatingActionButton: const SearchFloatingActionButton(),
       body: RefreshIndicator.adaptive(
         edgeOffset: 110,
         onRefresh: () {

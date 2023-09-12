@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:action/shared/ui/credits_list.dart';
 import 'package:action/shared/ui/poster.dart';
 import 'package:action/shared/models/cast.dart';
+import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -54,6 +55,7 @@ class DetailView extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
+      floatingActionButton: const SearchFloatingActionButton(),
       body: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         controller: scrollController,

@@ -4,6 +4,7 @@ import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
 import 'package:action/shared/ui/pin_button.dart';
+import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:action/shared/ui/blurred_app_bar.dart';
@@ -87,6 +88,7 @@ class PersonPage extends HookConsumerWidget {
 
       return Scaffold(
         extendBodyBehindAppBar: true,
+        floatingActionButton: const SearchFloatingActionButton(),
         appBar: BlurredAppBar(
           title: data.name!,
           actions: [
