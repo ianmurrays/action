@@ -45,24 +45,91 @@ class TVShowDetailPage extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Row(children: [
-                const Icon(Icons.calendar_month, size: 10),
+                const Icon(
+                  Icons.calendar_month,
+                  size: 10,
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black,
+                      offset: Offset(0, 0),
+                      blurRadius: 2,
+                    ),
+                  ],
+                ),
                 const SizedBox(width: 2),
                 Text(
                   DateFormat.yMMMMd().format(data.firstAirDate!),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black,
+                        offset: Offset(0, 0),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
                 ),
               ]),
               Row(
                 children: [
-                  const Icon(Icons.camera_roll, size: 10),
+                  const Icon(
+                    Icons.camera_roll,
+                    size: 10,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black,
+                        offset: Offset(0, 0),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
                   const SizedBox(width: 2),
-                  Text(data.inProduction! ? 'In Production' : 'Finished'),
+                  Text(
+                    data.inProduction! ? 'In Production' : 'Finished',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black,
+                          offset: Offset(0, 0),
+                          blurRadius: 2,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               Row(
                 children: [
-                  const Icon(Icons.star, size: 10),
+                  const Icon(
+                    Icons.star,
+                    size: 10,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black,
+                        offset: Offset(0, 0),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
                   const SizedBox(width: 2),
-                  Text(data.voteAverage!.toStringAsFixed(1)),
+                  Text(
+                    data.voteAverage!.toStringAsFixed(1),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black,
+                          offset: Offset(0, 0),
+                          blurRadius: 2,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
