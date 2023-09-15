@@ -35,6 +35,9 @@ class MovieDetailPage extends HookConsumerWidget {
           summary: data.overview,
           cast: data.credits!.cast!,
           crew: data.credits!.crew!,
+          imdbId: data.imdbId,
+          tmdbId: data.id,
+          isMovie: true,
           buildPinButton: (context) => PinButton(
               tmdbId: data.id!,
               pinBuilderCallback: () => Pin()

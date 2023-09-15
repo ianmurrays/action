@@ -30,6 +30,8 @@ class TVShowDetailPage extends HookConsumerWidget {
           summary: data.overview,
           cast: data.aggregateCredits!.cast ?? [],
           crew: data.aggregateCredits!.crew ?? [],
+          tmdbId: data.id,
+          isMovie: false,
           buildPinButton: (context) => PinButton(
               tmdbId: data.id!,
               pinBuilderCallback: () => Pin()

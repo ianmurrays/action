@@ -5,9 +5,11 @@ import 'package:action/shared/ui/credits_list.dart';
 import 'package:action/shared/ui/poster.dart';
 import 'package:action/shared/models/cast.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef MetadataBuilder = Widget Function(BuildContext context);
 typedef PinButtonBuilder = Widget Function(BuildContext context);
@@ -23,6 +25,9 @@ class DetailView extends HookConsumerWidget {
   final String? summary;
   final List<Cast> cast;
   final List<Cast> crew;
+  final int? tmdbId;
+  final String? imdbId;
+  final bool isMovie;
 
   const DetailView({
     super.key,
@@ -34,6 +39,9 @@ class DetailView extends HookConsumerWidget {
     this.summary,
     this.cast = const <Cast>[],
     this.crew = const <Cast>[],
+    required this.tmdbId,
+    this.imdbId,
+    required this.isMovie,
   });
 
   @override
@@ -72,6 +80,57 @@ class DetailView extends HookConsumerWidget {
                 icon: const Icon(Icons.share),
                 onPressed: () {},
               ),
+              IconButton(
+                icon: const Icon(Icons.more_horiz),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: 300,
+                        color: Theme.of(context).colorScheme.background,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            const Text(
+                              "More",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Divider(),
+                            if (tmdbId != null)
+                              ListTile(
+                                leading: const Icon(Icons.open_in_new),
+                                title: const Text("Open in TMDB"),
+                                onTap: () {
+                                  launchUrl(
+                                    Uri.parse(
+                                      "https://www.themoviedb.org/${isMovie ? 'movie' : 'tv'}/$tmdbId",
+                                    ),
+                                  );
+                                },
+                              ),
+                            if (imdbId != null)
+                              ListTile(
+                                leading: const Icon(Icons.open_in_new),
+                                title: const Text("Open in IMDB"),
+                                onTap: () {
+                                  launchUrl(
+                                    Uri.parse(
+                                      "https://www.imdb.com/title/$imdbId",
+                                    ),
+                                  );
+                                },
+                              ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
             ],
             backgroundColor:
                 Theme.of(context).colorScheme.background.withAlpha(200),
