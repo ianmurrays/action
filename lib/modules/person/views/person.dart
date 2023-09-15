@@ -108,7 +108,7 @@ class PersonPage extends HookConsumerWidget {
         body: SingleChildScrollView(
           padding: const EdgeInsets.only(
             bottom: 40,
-            top: 110,
+            top: 120,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
