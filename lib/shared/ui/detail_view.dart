@@ -54,6 +54,8 @@ class DetailView extends HookConsumerWidget {
       return null;
     }, []);
 
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
       floatingActionButton: const SearchFloatingActionButton(),
       body: CustomScrollView(
@@ -61,6 +63,9 @@ class DetailView extends HookConsumerWidget {
         controller: scrollController,
         slivers: [
           SliverAppBar(
+            foregroundColor: titleOpacity.value <= 0.1
+                ? Colors.white
+                : (isLightMode ? Colors.black : Colors.white),
             actions: [
               buildPinButton(context),
               IconButton(
@@ -73,7 +78,9 @@ class DetailView extends HookConsumerWidget {
             title: Text(
               title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white.withOpacity(titleOpacity.value)),
+                  color: isLightMode
+                      ? Colors.black.withOpacity(titleOpacity.value)
+                      : Colors.white.withOpacity(titleOpacity.value)),
             ),
             expandedHeight: 350,
             pinned: true,
@@ -126,7 +133,19 @@ class DetailView extends HookConsumerWidget {
                             const SizedBox(height: 10),
                             Text(
                               title,
-                              style: Theme.of(context).textTheme.headlineMedium,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                color: Colors.white,
+                                shadows: [
+                                  const Shadow(
+                                    color: Colors.black,
+                                    offset: Offset(0, 0),
+                                    blurRadius: 2,
+                                  ),
+                                ],
+                              ),
                               textAlign: TextAlign.center,
                             ),
                             Padding(
