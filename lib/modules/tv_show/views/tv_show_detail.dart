@@ -134,6 +134,10 @@ class _LoadingScreen extends StatelessWidget {
             icon: const Icon(Icons.share),
             onPressed: () {},
           ),
+          IconButton(
+            icon: const Icon(Icons.more_horiz),
+            onPressed: () {},
+          ),
         ],
         backgroundColor:
             Theme.of(context).colorScheme.background.withAlpha(200),
