@@ -50,7 +50,7 @@ class HomePage extends HookConsumerWidget {
         },
         child: CustomScrollView(
           slivers: [
-            const SliverPadding(padding: EdgeInsets.only(top: 110)),
+            const SliverPadding(padding: EdgeInsets.only(top: 120)),
             pins.maybeWhen(
               data: (pins) {
                 if (pins.isEmpty) {
