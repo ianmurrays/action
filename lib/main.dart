@@ -1,4 +1,6 @@
 import 'package:action/isar/models/pin.dart';
+import 'package:action/isar/models/recent_search.dart';
+import 'package:action/isar/models/search_item.dart';
 import 'package:action/shared/providers/isar.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -26,7 +28,11 @@ void main() async {
 Future<Isar> loadDb() async {
   final dir = await getApplicationDocumentsDirectory();
   final isar = await Isar.open(
-    [PinSchema],
+    [
+      PinSchema,
+      SearchItemSchema,
+      RecentSearchSchema,
+    ],
     directory: dir.path,
   );
 

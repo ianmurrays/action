@@ -1,3 +1,7 @@
+import 'package:action/isar/models/recent_search.dart';
+import 'package:action/isar/models/search_item.dart';
+import 'package:action/modules/search/providers/recent_taps.provider.dart';
+import 'package:action/modules/search/providers/search_items.provider.dart';
 import 'package:action/shared/ui/movie_tile.dart';
 import 'package:action/shared/ui/poster_tile.dart';
 import 'package:action/shared/models/search.dart';
@@ -8,13 +12,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-var recentSearches = [
-  'tom',
-  'orange is the new black',
-  'mr robot',
-  'breaking bad',
-];
 
 const recentResultsTapped = [
   {
@@ -65,6 +62,9 @@ class SearchPage extends HookConsumerWidget {
     final searchBarTextController = useTextEditingController();
 
     final searchResultsController = ref.watch(searchPageControllerProvider);
+
+    final searchItems = ref.watch(watchSearchItemsProvider);
+    final recentTaps = ref.watch(watchRecentTapsProvider);
 
     useEffect(() {
       searchBarFocusNode.requestFocus();
@@ -128,6 +128,14 @@ class SearchPage extends HookConsumerWidget {
                 width: MediaQuery.of(context).size.width / 3 - 2 * 4,
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
                 onTap: () {
+                  ref.read(recentTapsProvider.notifier).addRecentTap(
+                        RecentSearch()
+                          ..tmdbId = item.id
+                          ..title = item.name
+                          ..posterPath = item.profilePath
+                          ..type = SearchType.person,
+                      );
+
                   AutoRouter.of(context).push(PersonRoute(personId: item.id!));
                 },
               );
@@ -162,6 +170,18 @@ class SearchPage extends HookConsumerWidget {
                 width: MediaQuery.of(context).size.width / 3 - 2 * 4,
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
                 onTap: () {
+                  ref.read(recentTapsProvider.notifier).addRecentTap(
+                        RecentSearch()
+                          ..tmdbId = item.id
+                          ..title = item.title
+                          ..posterPath = item.posterPath
+                          ..voteAverage = item.voteAverage
+                          ..year = year
+                          ..type = item.mediaType == MediaType.movie
+                              ? SearchType.movie
+                              : SearchType.tv,
+                      );
+
                   if (item.mediaType == MediaType.tv) {
                     AutoRouter.of(context)
                         .push(TVShowDetailRoute(tvShowId: item.id!));
@@ -177,20 +197,20 @@ class SearchPage extends HookConsumerWidget {
       );
     }
 
-    Widget buildLatestSearches() {
+    Widget buildLatestSearches(List<SearchItem> searchItems) {
       return SliverPadding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10, left: 20),
         sliver: SliverList.builder(
-          itemCount: recentSearches.length,
+          itemCount: searchItems.length,
           itemBuilder: (context, index) {
             return Dismissible(
               direction: DismissDirection.endToStart,
               onDismissed: (direction) {
-                // setState(() {
-                //   recentSearches.removeAt(index);
-                // });
+                ref
+                    .read(searchItemsServiceProvider.notifier)
+                    .removeSearchItem(searchItems[index]);
               },
-              key: ValueKey(recentSearches[index]),
+              key: ValueKey(searchItems[index].id),
               background: Container(
                 color: Colors.red,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -200,17 +220,17 @@ class SearchPage extends HookConsumerWidget {
               ),
               child: ListTile(
                 dense: true,
-                title: Text(recentSearches[index]),
+                title: Text(searchItems[index].query!),
                 trailing: IconButton(
                   onPressed: () {
-                    // setState(() {
-                    //   recentSearches.removeAt(index);
-                    // });
+                    ref
+                        .read(searchItemsServiceProvider.notifier)
+                        .removeSearchItem(searchItems[index]);
                   },
                   icon: const Icon(Icons.close),
                 ),
                 onTap: () {
-                  searchBarTextController.text = recentSearches[index];
+                  searchBarTextController.text = searchItems[index].query!;
 
                   ref
                       .read(searchPageControllerProvider.notifier)
@@ -223,7 +243,7 @@ class SearchPage extends HookConsumerWidget {
       );
     }
 
-    Widget buildLatestTappedResults() {
+    Widget buildLatestTappedResults(List<RecentSearch> recentTaps) {
       return SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         sliver: SliverGrid.builder(
@@ -233,28 +253,45 @@ class SearchPage extends HookConsumerWidget {
             crossAxisSpacing: 2,
             childAspectRatio: 2 / 4.1,
           ),
+          itemCount: recentTaps.length,
           itemBuilder: (context, index) {
-            var posterPath =
-                recentResultsTapped[index]['poster_path'] as String;
-            var title = recentResultsTapped[index]['title'] as String;
-            var year = DateTime.parse(
-                    recentResultsTapped[index]['release_date'] as String)
-                .year;
+            final item = recentTaps[index];
 
-            return MovieTile(
-              posterPath: posterPath,
-              title: title,
-              year: year.toString(),
-              voteAverage: recentResultsTapped[index]['vote_average'] as double,
-              width:
-                  MediaQuery.of(context).size.width / 3 - 2 * 4, // see delegate
-              height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
-              onTap: () {
-                AutoRouter.of(context).push(MovieDetailRoute(movieId: 0));
-              },
-            );
+            if (item.type == SearchType.person) {
+              return PosterTile(
+                  imagePath: item.posterPath,
+                  title: item.title!,
+                  width: MediaQuery.of(context).size.width / 3 - 2 * 4,
+                  height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
+                  onTap: () {
+                    AutoRouter.of(context)
+                        .push(PersonRoute(personId: item.tmdbId!));
+                  });
+            } else {
+              final posterPath = item.posterPath as String;
+              final title = item.title as String;
+              final year = item.year;
+
+              return MovieTile(
+                posterPath: posterPath,
+                title: title,
+                year: year.toString(),
+                voteAverage: item.voteAverage!,
+                width: MediaQuery.of(context).size.width / 3 -
+                    2 * 4, // see delegate
+                height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
+                onTap: () {
+                  if (item.type == SearchType.tv) {
+                    AutoRouter.of(context)
+                        .push(TVShowDetailRoute(tvShowId: item.tmdbId!));
+                  } else if (item.type == SearchType.movie) {
+                    AutoRouter.of(context)
+                        .push(MovieDetailRoute(movieId: item.tmdbId!));
+                  }
+                },
+              );
+            }
           },
-          itemCount: recentResultsTapped.length,
         ),
       );
     }
@@ -299,10 +336,20 @@ class SearchPage extends HookConsumerWidget {
             ),
             automaticallyImplyLeading: false,
           ),
-          // if (searchResultsController.viewState == SearchViewState.idle)
-          //   buildLatestSearches(),
-          // if (searchResultsController.viewState == SearchViewState.idle)
-          //   buildLatestTappedResults(),
+          if (searchResultsController.viewState == SearchViewState.idle)
+            searchItems.maybeWhen(
+              data: (items) => items.isNotEmpty
+                  ? buildLatestSearches(items)
+                  : const SliverToBoxAdapter(),
+              orElse: () => const SliverToBoxAdapter(),
+            ),
+          if (searchResultsController.viewState == SearchViewState.idle)
+            recentTaps.maybeWhen(
+              data: (items) => items.isNotEmpty
+                  ? buildLatestTappedResults(items)
+                  : const SliverToBoxAdapter(),
+              orElse: () => const SliverToBoxAdapter(),
+            ),
           if (searchResultsController.viewState == SearchViewState.results &&
               searchResultsController.searchQuery!.results!.isEmpty)
             buildEmptyResults(),
