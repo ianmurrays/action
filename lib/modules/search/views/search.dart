@@ -1,7 +1,7 @@
 import 'package:action/isar/models/recent_search.dart';
-import 'package:action/isar/models/search_item.dart';
 import 'package:action/modules/search/providers/recent_taps.provider.dart';
-import 'package:action/modules/search/providers/search_items.provider.dart';
+import 'package:action/modules/search/ui/latest_searches.dart';
+import 'package:action/modules/search/ui/latest_tapped_results.dart';
 import 'package:action/shared/ui/movie_tile.dart';
 import 'package:action/shared/ui/poster_tile.dart';
 import 'package:action/shared/models/search.dart';
@@ -25,9 +25,6 @@ class SearchPage extends HookConsumerWidget {
     final searchBarTextController = useTextEditingController();
 
     final searchResultsController = ref.watch(searchPageControllerProvider);
-
-    final searchItems = ref.watch(watchSearchItemsProvider);
-    final recentTaps = ref.watch(watchRecentTapsProvider);
 
     useEffect(() {
       searchBarFocusNode.requestFocus();
@@ -160,105 +157,6 @@ class SearchPage extends HookConsumerWidget {
       );
     }
 
-    Widget buildLatestSearches(List<SearchItem> searchItems) {
-      return SliverPadding(
-        padding: const EdgeInsets.only(top: 10, left: 20),
-        sliver: SliverList.builder(
-          itemCount: searchItems.length,
-          itemBuilder: (context, index) {
-            return Dismissible(
-              direction: DismissDirection.endToStart,
-              onDismissed: (direction) {
-                ref
-                    .read(searchItemsServiceProvider.notifier)
-                    .removeSearchItem(searchItems[index]);
-              },
-              key: ValueKey(searchItems[index].id),
-              background: Container(
-                color: Colors.red,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                // align the child to the right
-                alignment: Alignment.centerRight,
-                child: const Icon(Icons.delete),
-              ),
-              child: ListTile(
-                dense: true,
-                title: Text(searchItems[index].query!),
-                trailing: IconButton(
-                  onPressed: () {
-                    ref
-                        .read(searchItemsServiceProvider.notifier)
-                        .removeSearchItem(searchItems[index]);
-                  },
-                  icon: const Icon(Icons.close),
-                ),
-                onTap: () {
-                  searchBarTextController.text = searchItems[index].query!;
-
-                  ref
-                      .read(searchPageControllerProvider.notifier)
-                      .search(searchBarTextController.text);
-                },
-              ),
-            );
-          },
-        ),
-      );
-    }
-
-    Widget buildLatestTappedResults(List<RecentSearch> recentTaps) {
-      return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        sliver: SliverGrid.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 2,
-            crossAxisSpacing: 2,
-            childAspectRatio: 2 / 4.1,
-          ),
-          itemCount: recentTaps.length,
-          itemBuilder: (context, index) {
-            final item = recentTaps[index];
-
-            if (item.type == SearchType.person) {
-              return PosterTile(
-                  imagePath: item.posterPath,
-                  title: item.title!,
-                  width: MediaQuery.of(context).size.width / 3 - 2 * 4,
-                  height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
-                  onTap: () {
-                    AutoRouter.of(context)
-                        .push(PersonRoute(personId: item.tmdbId!));
-                  });
-            } else {
-              final posterPath = item.posterPath;
-              final title = item.title ?? '';
-              final year = item.year;
-
-              return MovieTile(
-                posterPath: posterPath,
-                title: title,
-                year: year.toString(),
-                voteAverage: item.voteAverage!,
-                width: MediaQuery.of(context).size.width / 3 -
-                    2 * 4, // see delegate
-                height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
-                onTap: () {
-                  if (item.type == SearchType.tv) {
-                    AutoRouter.of(context)
-                        .push(TVShowDetailRoute(tvShowId: item.tmdbId!));
-                  } else if (item.type == SearchType.movie) {
-                    AutoRouter.of(context)
-                        .push(MovieDetailRoute(movieId: item.tmdbId!));
-                  }
-                },
-              );
-            }
-          },
-        ),
-      );
-    }
-
     return Scaffold(
       body: CustomScrollView(
         controller: scrollViewController,
@@ -300,19 +198,17 @@ class SearchPage extends HookConsumerWidget {
             automaticallyImplyLeading: false,
           ),
           if (searchResultsController.viewState == SearchViewState.idle)
-            searchItems.maybeWhen(
-              data: (items) => items.isNotEmpty
-                  ? buildLatestSearches(items)
-                  : const SliverToBoxAdapter(),
-              orElse: () => const SliverToBoxAdapter(),
+            LatestSearches(
+              onSearch: (query) {
+                searchBarTextController.text = query;
+
+                ref
+                    .read(searchPageControllerProvider.notifier)
+                    .search(searchBarTextController.text);
+              },
             ),
           if (searchResultsController.viewState == SearchViewState.idle)
-            recentTaps.maybeWhen(
-              data: (items) => items.isNotEmpty
-                  ? buildLatestTappedResults(items)
-                  : const SliverToBoxAdapter(),
-              orElse: () => const SliverToBoxAdapter(),
-            ),
+            const LatestTappedResults(),
           if (searchResultsController.viewState == SearchViewState.results &&
               searchResultsController.searchQuery!.results!.isEmpty)
             buildEmptyResults(),
