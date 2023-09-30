@@ -14,44 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-const recentResultsTapped = [
-  {
-    "id": 640146,
-    "poster_path": "/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg",
-    "release_date": "2023-02-15",
-    "title": "Ant-Man and the Wasp: Quantumania",
-    "vote_average": 6.5,
-  },
-  {
-    "id": 502356,
-    "poster_path": "/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
-    "release_date": "2023-04-05",
-    "title": "The Super Mario Bros. Movie",
-    "vote_average": 7.5,
-  },
-  {
-    "id": 594767,
-    "poster_path": "/2VK4d3mqqTc7LVZLnLPeRiPaJ71.jpg",
-    "release_date": "2023-03-15",
-    "title": "Shazam! Fury of the Gods",
-    "vote_average": 6.8,
-  },
-  {
-    "id": 76600,
-    "poster_path": "/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
-    "release_date": "2022-12-14",
-    "title": "Avatar: The Way of Water",
-    "vote_average": 7.7,
-  },
-  {
-    "id": 948713,
-    "poster_path": "/7yyFEsuaLGTPul5UkHc5BhXnQ0k.jpg",
-    "release_date": "2023-04-14",
-    "title": "The Last Kingdom: Seven Kings Must Die",
-    "vote_average": 7.4,
-  },
-];
-
 @RoutePage()
 class SearchPage extends HookConsumerWidget {
   const SearchPage({super.key});
