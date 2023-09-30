@@ -74,7 +74,7 @@ class PersonPage extends HookConsumerWidget {
     }, data: (data) {
       // Format the birthday using a date formatter
       final birthday = data.birthday != null
-          ? DateFormat.yMMMMd().format(data.birthday!) // FIXME: use locale
+          ? DateFormat.yMMMMd().format(data.birthday!)
           : 'person.unknown'.tr();
 
       final age = data.birthday != null
@@ -85,7 +85,7 @@ class PersonPage extends HookConsumerWidget {
 
       if (data.deathday != null) {
         deathday =
-            DateFormat.yMMMMd().format(data.deathday!); // FIXME: use locale
+            DateFormat.yMMMMd().format(data.deathday!);
       }
 
       return Scaffold(
