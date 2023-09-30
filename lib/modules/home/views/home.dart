@@ -31,12 +31,6 @@ class HomePage extends HookConsumerWidget {
           },
           icon: const Icon(Icons.search),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(Icons.settings),
-          )
-        ],
       ),
       floatingActionButton: const SearchFloatingActionButton(),
       body: RefreshIndicator.adaptive(
