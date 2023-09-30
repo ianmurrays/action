@@ -49,7 +49,8 @@ class Person {
         biography: json["biography"],
         birthday:
             json["birthday"] == null ? null : DateTime.parse(json["birthday"]),
-        deathday: json["deathday"],
+        deathday:
+            json["deathday"] == null ? null : DateTime.parse(json["deathday"]),
         gender: json["gender"],
         homepage: json["homepage"],
         id: json["id"],
@@ -75,7 +76,8 @@ class Person {
         "biography": biography,
         "birthday":
             "${birthday!.year.toString().padLeft(4, '0')}-${birthday!.month.toString().padLeft(2, '0')}-${birthday!.day.toString().padLeft(2, '0')}",
-        "deathday": deathday,
+        "deathday":
+            "${deathday!.year.toString().padLeft(4, '0')}-${deathday!.month.toString().padLeft(2, '0')}-${deathday!.day.toString().padLeft(2, '0')}",
         "gender": gender,
         "homepage": homepage,
         "id": id,
