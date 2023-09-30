@@ -47,9 +47,9 @@ class DetailView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scrollController = useScrollController();
     final titleOpacity = useState(0.0);
     final showAllSummary = useState(false);
+    final scrollController = PrimaryScrollController.of(context);
 
     useEffect(() {
       scrollController.addListener(() {
@@ -69,7 +69,6 @@ class DetailView extends HookConsumerWidget {
       floatingActionButton: const SearchFloatingActionButton(),
       body: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        controller: scrollController,
         slivers: [
           SliverAppBar(
             foregroundColor: titleOpacity.value <= 0.1

@@ -58,7 +58,7 @@ class SearchPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scrollViewController = useScrollController();
+    final scrollViewController = PrimaryScrollController.of(context);
     final searchBarFocusNode = useFocusNode();
     final searchBarTextController = useTextEditingController();
 
@@ -269,8 +269,8 @@ class SearchPage extends HookConsumerWidget {
                         .push(PersonRoute(personId: item.tmdbId!));
                   });
             } else {
-              final posterPath = item.posterPath as String;
-              final title = item.title as String;
+              final posterPath = item.posterPath;
+              final title = item.title ?? '';
               final year = item.year;
 
               return MovieTile(
