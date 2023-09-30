@@ -1,0 +1,41 @@
+{
+  "home": {
+    "pinned_items": "Pinned Items",
+    "popular_movies": "Popular Movies",
+    "upcoming_movies": "Upcoming Movies",
+    "popular_tv_shows": "Popular TV Shows",
+    "top_rated_tv_shows": "Top Rated TV Shows"
+  },
+  "detail": {
+    "open_in_tmdb": "Open in TMDB",
+    "open_in_imdb": "Open in IMDB",
+    "summary": "Summary",
+    "no_summary": "No summary available.",
+    "cast": "Cast",
+    "crew": "Crew"
+  },
+  "person": {
+    "genders": {
+      "not_set": "Not set / not specified",
+      "female": "Female",
+      "male": "Male",
+      "non_binary": "Non-binary",
+      "unknown": "Unknown"
+    },
+    "unknown": "Unknown",
+    "known_for": "Known For",
+    "gender": "Gender",
+    "birthday": "Birthday",
+    "place_of_birth": "Place of Birth",
+    "deathday": "Died",
+    "biography": "Biography",
+    "no_biography": "No biography found.",
+    "movies": "Movies",
+    "tv_shows": "TV Shows"
+  },
+  "search": {
+    "search": "Search",
+    "no_results": "No results found.",
+    "unknown": "Unknown"
+  }
+}

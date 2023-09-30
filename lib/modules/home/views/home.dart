@@ -4,6 +4,7 @@ import 'package:action/router/app_router.dart';
 import 'package:action/shared/providers/pin.provider.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:action/shared/ui/blurred_app_bar.dart';
@@ -58,7 +59,7 @@ class HomePage extends HookConsumerWidget {
                 }
 
                 return Section(
-                  title: "Pinned Items",
+                  title: "home.pinned_items".tr(),
                   entries: pins
                       .map((pin) => Entry(
                             id: pin.tmdbId!,
@@ -77,7 +78,7 @@ class HomePage extends HookConsumerWidget {
             popularMovies.maybeWhen(
               data: (movies) {
                 return Section(
-                  title: "Popular Movies",
+                  title: "home.popular_movies".tr(),
                   entries: movies
                       .map((movie) => Entry(
                             id: movie.id!,
@@ -95,7 +96,7 @@ class HomePage extends HookConsumerWidget {
             upcomingMovies.maybeWhen(
               data: (movies) {
                 return Section(
-                  title: "Upcoming Movies",
+                  title: "home.upcoming_movies".tr(),
                   entries: movies
                       .map((movie) => Entry(
                             id: movie.id!,
@@ -113,7 +114,7 @@ class HomePage extends HookConsumerWidget {
             popularTvShows.maybeWhen(
               data: (tvShows) {
                 return Section(
-                  title: "Popular TV Shows",
+                  title: "home.popular_tv_shows".tr(),
                   entries: tvShows
                       .map((tvShow) => Entry(
                             id: tvShow.id!,
@@ -131,7 +132,7 @@ class HomePage extends HookConsumerWidget {
             topRatedTvShows.maybeWhen(
               data: (tvShows) {
                 return Section(
-                  title: "Top Rated TV Shows",
+                  title: "home.top_rated_tv_shows".tr(),
                   entries: tvShows
                       .map((tvShow) => Entry(
                             id: tvShow.id!,

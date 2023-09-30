@@ -6,6 +6,7 @@ import 'package:action/router/app_router.dart';
 import 'package:action/shared/ui/pin_button.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:action/shared/ui/blurred_app_bar.dart';
 import 'package:action/shared/ui/poster.dart';
@@ -45,15 +46,15 @@ class PersonPage extends HookConsumerWidget {
   String _gender(int gender) {
     switch (gender) {
       case 0:
-        return 'Not set / not specified';
+        return 'person.genders.not_set'.tr();
       case 1:
-        return 'Female';
+        return 'person.genders.female'.tr();
       case 2:
-        return 'Male';
+        return 'person.genders.male'.tr();
       case 3:
-        return 'Non-binary';
+        return 'person.genders.non_binary'.tr();
       default:
-        return 'Unknown';
+        return 'person.genders.unknown'.tr();
     }
   }
 
@@ -73,8 +74,8 @@ class PersonPage extends HookConsumerWidget {
     }, data: (data) {
       // Format the birthday using a date formatter
       final birthday = data.birthday != null
-          ? DateFormat.yMMMMd().format(data.birthday!)
-          : 'Unknown';
+          ? DateFormat.yMMMMd().format(data.birthday!) // FIXME: use locale
+          : 'person.unknown'.tr();
 
       final age = data.birthday != null
           ? DateTime.now().difference(data.birthday!).inDays ~/ 365
@@ -83,7 +84,8 @@ class PersonPage extends HookConsumerWidget {
       String? deathday;
 
       if (data.deathday != null) {
-        deathday = DateFormat.yMMMMd().format(data.deathday!);
+        deathday =
+            DateFormat.yMMMMd().format(data.deathday!); // FIXME: use locale
       }
 
       return Scaffold(
@@ -129,20 +131,21 @@ class PersonPage extends HookConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ..._personalDetail(context,
-                              label: 'Known For',
+                              label: 'person.known_for'.tr(),
                               value: data.knownForDepartment.toString()),
                           ..._personalDetail(context,
-                              label: 'Gender', value: _gender(data.gender!)),
+                              label: 'person.gender'.tr(),
+                              value: _gender(data.gender!)),
                           if (age != null)
                             ..._personalDetail(context,
-                              label: 'Birthday',
+                                label: 'person.birthday'.tr(),
                               value: "$birthday ($age years old)"),
                           ..._personalDetail(context,
-                              label: 'Place of Birth',
+                              label: 'person.place_of_birth'.tr(),
                               value: data.placeOfBirth ?? 'Unknown'),
                           if (deathday != null)
                             ..._personalDetail(context,
-                                label: 'Died', value: deathday)
+                                label: 'person.deathday'.tr(), value: deathday)
                         ],
                       ),
                     ),
@@ -153,9 +156,9 @@ class PersonPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  'Biography',
+                  'person.biography',
                   style: Theme.of(context).textTheme.headlineSmall,
-                ),
+                ).tr(),
               ),
               const SizedBox(height: 10),
               Padding(
@@ -167,7 +170,7 @@ class PersonPage extends HookConsumerWidget {
                   child: Text(
                     data.biography != null && data.biography!.isNotEmpty
                         ? data.biography!
-                        : 'No biography found.',
+                        : 'person.no_biography'.tr(),
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: showAllBiography.value ? null : 5,
                     overflow:
@@ -179,7 +182,7 @@ class PersonPage extends HookConsumerWidget {
               ...buildCredits(
                 context,
                 type: CreditType.movie,
-                title: 'Movies',
+                title: 'person.movies'.tr(),
                 items: (data.movieCredits?.cast ?? [])
                     .map((e) => {
                           'posterPath': e.posterPath,
@@ -192,7 +195,7 @@ class PersonPage extends HookConsumerWidget {
               ...buildCredits(
                 context,
                 type: CreditType.tv,
-                title: 'TV Shows',
+                title: 'person.tv_shows'.tr(),
                 items: (data.tvCredits?.cast ?? [])
                     .map((e) => {
                           'posterPath': e.posterPath,

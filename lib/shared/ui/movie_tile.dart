@@ -60,7 +60,8 @@ class MovieTile extends StatelessWidget {
                   Text(year,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                             color: Colors.grey,
-                          )),
+                        ),
+                  ),
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.yellow, size: 10),

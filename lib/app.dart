@@ -1,5 +1,6 @@
 import 'package:action/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class App extends StatelessWidget {
   final _appRouter = AppRouter();
@@ -10,6 +11,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       routerConfig: _appRouter.config(),
       // routerDelegate: _appRouter.delegate(),
       debugShowCheckedModeBanner: false,

@@ -9,6 +9,7 @@ import 'package:action/modules/search/models/search_state.dart';
 import 'package:action/modules/search/providers/search_page_controller.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -95,10 +96,10 @@ class SearchPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'No results found',
+                'search.no_results',
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
-              ),
+              ).tr(),
             ],
           ),
         ),
@@ -148,7 +149,7 @@ class SearchPage extends HookConsumerWidget {
                 try {
                   year = DateTime.parse(item.releaseDate!).year.toString();
                 } catch (e) {
-                  year = 'Unknown';
+                  year = 'search.unknown'.tr();
                 }
 
                 name = item.title!;
@@ -156,7 +157,7 @@ class SearchPage extends HookConsumerWidget {
                 try {
                   year = item.firstAirDate!.year.toString();
                 } catch (e) {
-                  year = 'Unknown';
+                  year = 'search.unknown'.tr();
                 }
 
                 name = item.name!;
@@ -309,7 +310,7 @@ class SearchPage extends HookConsumerWidget {
               onSubmitted: (value) {
                 ref.read(searchPageControllerProvider.notifier).search(value);
               },
-              hintText: 'Search',
+              hintText: 'search.search'.tr(),
               leading: IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();

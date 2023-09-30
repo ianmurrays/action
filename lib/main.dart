@@ -2,8 +2,8 @@ import 'package:action/isar/models/pin.dart';
 import 'package:action/isar/models/recent_search.dart';
 import 'package:action/isar/models/search_item.dart';
 import 'package:action/shared/providers/isar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:action/app.dart';
@@ -13,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await EasyLocalization.ensureInitialized();
+
   final db = await loadDb();
 
   runApp(
@@ -20,7 +22,14 @@ void main() async {
       overrides: [
         dbProvider.overrideWithValue(db),
       ],
-      child: App(),
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale('en', 'US'),
+        ],
+        path: 'assets/i18n',
+        fallbackLocale: const Locale('en', 'US'),
+        child: App(),
+      ),
     ),
   );
 }

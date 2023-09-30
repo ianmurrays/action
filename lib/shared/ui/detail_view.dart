@@ -5,6 +5,7 @@ import 'package:action/shared/ui/credits_list.dart';
 import 'package:action/shared/ui/poster.dart';
 import 'package:action/shared/models/cast.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -109,7 +110,7 @@ class DetailView extends HookConsumerWidget {
                             if (tmdbId != null)
                               ListTile(
                                 leading: const Icon(Icons.open_in_new),
-                                title: const Text("Open in TMDB"),
+                                title: const Text("detail.open_in_tmdb").tr(),
                                 onTap: () {
                                   launchUrl(
                                     Uri.parse(
@@ -121,7 +122,7 @@ class DetailView extends HookConsumerWidget {
                             if (imdbId != null)
                               ListTile(
                                 leading: const Icon(Icons.open_in_new),
-                                title: const Text("Open in IMDB"),
+                                title: const Text("detail.open_in_imdb").tr(),
                                 onTap: () {
                                   launchUrl(
                                     Uri.parse(
@@ -250,8 +251,10 @@ class DetailView extends HookConsumerWidget {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text("Summary",
-                        style: Theme.of(context).textTheme.headlineSmall),
+                    child: Text(
+                      "detail.summary",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ).tr(),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
@@ -260,7 +263,7 @@ class DetailView extends HookConsumerWidget {
                         showAllSummary.value = !showAllSummary.value;
                       },
                       child: Text(
-                        summary ?? 'No summary available.',
+                        summary ?? 'detail.no_summary'.tr(),
                         style: Theme.of(context).textTheme.bodyLarge,
                         maxLines: showAllSummary.value ? null : 5,
                         overflow:
@@ -272,16 +275,20 @@ class DetailView extends HookConsumerWidget {
                   if (cast.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: Text("Cast",
-                          style: Theme.of(context).textTheme.headlineSmall),
+                      child: Text(
+                        "detail.cast",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ).tr(),
                     ),
                   if (cast.isNotEmpty) CreditsList(people: cast),
                   if (cast.isNotEmpty) const SizedBox(height: 10),
                   if (crew.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: Text("Crew",
-                          style: Theme.of(context).textTheme.headlineSmall),
+                      child: Text(
+                        "detail.crew",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ).tr(),
                     ),
                   if (crew.isNotEmpty) CreditsList(people: crew),
                 ],
