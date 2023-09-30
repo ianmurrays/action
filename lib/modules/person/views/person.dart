@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
+import 'package:action/shared/ui/open_website_menu.dart';
 import 'package:action/shared/ui/pin_button.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:auto_route/auto_route.dart';
@@ -13,7 +14,7 @@ import 'package:action/shared/ui/poster.dart';
 import 'package:action/shared/ui/poster_tile.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
 enum CreditType { movie, tv }
@@ -103,7 +104,18 @@ class PersonPage extends HookConsumerWidget {
                   ..posterPath = data.profilePath!),
             IconButton(
               icon: const Icon(Icons.share),
-              onPressed: () {},
+              onPressed: () {
+                Share.shareUri(
+                  Uri.parse(
+                    "https://www.themoviedb.org/person/${data.id}",
+                  ),
+                );
+              },
+            ),
+            OpenWebsiteMenu(
+              tmdbId: data.id,
+              imdbId: data.imdbId,
+              type: ItemType.person,
             ),
           ],
         ),

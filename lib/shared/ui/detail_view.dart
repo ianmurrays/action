@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:action/shared/ui/credits_list.dart';
+import 'package:action/shared/ui/open_website_menu.dart';
 import 'package:action/shared/ui/poster.dart';
 import 'package:action/shared/models/cast.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 typedef MetadataBuilder = Widget Function(BuildContext context);
 typedef PinButtonBuilder = Widget Function(BuildContext context);
@@ -86,57 +86,11 @@ class DetailView extends HookConsumerWidget {
                   );
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.more_horiz),
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Container(
-                        height: 300,
-                        color: Theme.of(context).colorScheme.background,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            const Text(
-                              "More",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const Divider(),
-                            if (tmdbId != null)
-                              ListTile(
-                                leading: const Icon(Icons.open_in_new),
-                                title: const Text("detail.open_in_tmdb").tr(),
-                                onTap: () {
-                                  launchUrl(
-                                    Uri.parse(
-                                      "https://www.themoviedb.org/${isMovie ? 'movie' : 'tv'}/$tmdbId",
-                                    ),
-                                  );
-                                },
-                              ),
-                            if (imdbId != null)
-                              ListTile(
-                                leading: const Icon(Icons.open_in_new),
-                                title: const Text("detail.open_in_imdb").tr(),
-                                onTap: () {
-                                  launchUrl(
-                                    Uri.parse(
-                                      "https://www.imdb.com/title/$imdbId",
-                                    ),
-                                  );
-                                },
-                              ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              )
+              OpenWebsiteMenu(
+                tmdbId: tmdbId,
+                imdbId: imdbId,
+                type: isMovie ? ItemType.movie : ItemType.tv,
+              ),
             ],
             backgroundColor:
                 Theme.of(context).colorScheme.background.withAlpha(200),
