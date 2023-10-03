@@ -6,7 +6,7 @@ part of 'person.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$personDetailsHash() => r'7ea5b4d2f793e67efa88180dbe2a00bb37758365';
+String _$personDetailsHash() => r'999ac483e7b444052ec917b4ca040011ceabaf07';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -28,8 +28,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-typedef PersonDetailsRef = AutoDisposeFutureProviderRef<Person>;
 
 /// See also [personDetails].
 @ProviderFor(personDetails)
@@ -77,10 +75,10 @@ class PersonDetailsFamily extends Family<AsyncValue<Person>> {
 class PersonDetailsProvider extends AutoDisposeFutureProvider<Person> {
   /// See also [personDetails].
   PersonDetailsProvider(
-    this.id,
-  ) : super.internal(
+    int id,
+  ) : this._internal(
           (ref) => personDetails(
-            ref,
+            ref as PersonDetailsRef,
             id,
           ),
           from: personDetailsProvider,
@@ -92,9 +90,43 @@ class PersonDetailsProvider extends AutoDisposeFutureProvider<Person> {
           dependencies: PersonDetailsFamily._dependencies,
           allTransitiveDependencies:
               PersonDetailsFamily._allTransitiveDependencies,
+          id: id,
         );
 
+  PersonDetailsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
   final int id;
+
+  @override
+  Override overrideWith(
+    FutureOr<Person> Function(PersonDetailsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: PersonDetailsProvider._internal(
+        (ref) => create(ref as PersonDetailsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Person> createElement() {
+    return _PersonDetailsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -109,5 +141,18 @@ class PersonDetailsProvider extends AutoDisposeFutureProvider<Person> {
     return _SystemHash.finish(hash);
   }
 }
+
+mixin PersonDetailsRef on AutoDisposeFutureProviderRef<Person> {
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _PersonDetailsProviderElement
+    extends AutoDisposeFutureProviderElement<Person> with PersonDetailsRef {
+  _PersonDetailsProviderElement(super.provider);
+
+  @override
+  int get id => (origin as PersonDetailsProvider).id;
+}
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

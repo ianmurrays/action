@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef PinRef = AutoDisposeStreamProviderRef<Pin?>;
-
 /// See also [pin].
 @ProviderFor(pin)
 const pinProvider = PinFamily();
@@ -77,10 +75,10 @@ class PinFamily extends Family<AsyncValue<Pin?>> {
 class PinProvider extends AutoDisposeStreamProvider<Pin?> {
   /// See also [pin].
   PinProvider(
-    this.tmdbId,
-  ) : super.internal(
+    int tmdbId,
+  ) : this._internal(
           (ref) => pin(
-            ref,
+            ref as PinRef,
             tmdbId,
           ),
           from: pinProvider,
@@ -89,9 +87,43 @@ class PinProvider extends AutoDisposeStreamProvider<Pin?> {
               const bool.fromEnvironment('dart.vm.product') ? null : _$pinHash,
           dependencies: PinFamily._dependencies,
           allTransitiveDependencies: PinFamily._allTransitiveDependencies,
+          tmdbId: tmdbId,
         );
 
+  PinProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.tmdbId,
+  }) : super.internal();
+
   final int tmdbId;
+
+  @override
+  Override overrideWith(
+    Stream<Pin?> Function(PinRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: PinProvider._internal(
+        (ref) => create(ref as PinRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        tmdbId: tmdbId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<Pin?> createElement() {
+    return _PinProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -105,6 +137,19 @@ class PinProvider extends AutoDisposeStreamProvider<Pin?> {
 
     return _SystemHash.finish(hash);
   }
+}
+
+mixin PinRef on AutoDisposeStreamProviderRef<Pin?> {
+  /// The parameter `tmdbId` of this provider.
+  int get tmdbId;
+}
+
+class _PinProviderElement extends AutoDisposeStreamProviderElement<Pin?>
+    with PinRef {
+  _PinProviderElement(super.provider);
+
+  @override
+  int get tmdbId => (origin as PinProvider).tmdbId;
 }
 
 String _$pinsHash() => r'e5e2ed4b458ced4c04c6b7e2f7b1ef166704a142';
@@ -137,4 +182,4 @@ final pinServiceProvider =
 
 typedef _$PinService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

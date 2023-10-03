@@ -41,8 +41,8 @@ class SearchPageController extends _$SearchPageController {
     );
 
     // FIXME: what if this fails?
-    final response =
-        await ref.read(tmdbApiProvider).v3.search.queryMulti(query, page: page);
+    final tmdb = await ref.read(tmdbApiProvider.future);
+    final response = await tmdb.v3.search.queryMulti(query, page: page);
 
     final searchQuery = SearchQuery.fromJson(response as Map<String, dynamic>);
     final results =

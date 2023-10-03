@@ -6,7 +6,7 @@ part of 'home.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$popularMoviesHash() => r'8f5c1c4604dcb6fc31373ee8ea823b1f36ca840f';
+String _$popularMoviesHash() => r'6e6d67eebf2dfe7e7a9f6128f838e03da84934ee';
 
 /// See also [popularMovies].
 @ProviderFor(popularMovies)
@@ -21,7 +21,7 @@ final popularMoviesProvider = AutoDisposeFutureProvider<List<Movie>>.internal(
 );
 
 typedef PopularMoviesRef = AutoDisposeFutureProviderRef<List<Movie>>;
-String _$upcomingMoviesHash() => r'aa72ba9ad18fff664e0526f0a1c87601f0169dc1';
+String _$upcomingMoviesHash() => r'938d1dd6c5a3c40358eb0fafe976ca360253eec4';
 
 /// See also [upcomingMovies].
 @ProviderFor(upcomingMovies)
@@ -36,7 +36,7 @@ final upcomingMoviesProvider = AutoDisposeFutureProvider<List<Movie>>.internal(
 );
 
 typedef UpcomingMoviesRef = AutoDisposeFutureProviderRef<List<Movie>>;
-String _$popularTvShowsHash() => r'1e5fe6ce8b335524d5543eeb065e4146550d84de';
+String _$popularTvShowsHash() => r'0cf77a4209f201a00d01d8d11999adc5f2335b36';
 
 /// See also [popularTvShows].
 @ProviderFor(popularTvShows)
@@ -51,7 +51,7 @@ final popularTvShowsProvider = AutoDisposeFutureProvider<List<TvShow>>.internal(
 );
 
 typedef PopularTvShowsRef = AutoDisposeFutureProviderRef<List<TvShow>>;
-String _$topRatedTvShowsHash() => r'5e32bd15d4d0812a12a4c2f787caea02ec39a8b5';
+String _$topRatedTvShowsHash() => r'1defd4b3fd476c254225718fedf1818648d44e07';
 
 /// See also [topRatedTvShows].
 @ProviderFor(topRatedTvShows)
@@ -68,4 +68,4 @@ final topRatedTvShowsProvider =
 
 typedef TopRatedTvShowsRef = AutoDisposeFutureProviderRef<List<TvShow>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

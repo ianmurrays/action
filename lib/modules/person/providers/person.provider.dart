@@ -6,7 +6,7 @@ part 'person.provider.g.dart';
 
 @riverpod
 Future<Person> personDetails(PersonDetailsRef ref, int id) async {
-  final tmdb = ref.read(tmdbApiProvider);
+  final tmdb = await ref.read(tmdbApiProvider.future);
   final response = await tmdb.v3.people.getDetails(id,
       appendToResponse: [
         'movie_credits',

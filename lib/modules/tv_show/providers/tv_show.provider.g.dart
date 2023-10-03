@@ -6,7 +6,7 @@ part of 'tv_show.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tvShowDetailsHash() => r'c24fc916c5b5b5923715d5e8092ed9907f3df7d6';
+String _$tvShowDetailsHash() => r'f7078b5800d85c3aa346f5faeda31d65a6dade8e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -28,8 +28,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-typedef TvShowDetailsRef = AutoDisposeFutureProviderRef<TvShow>;
 
 /// See also [tvShowDetails].
 @ProviderFor(tvShowDetails)
@@ -77,10 +75,10 @@ class TvShowDetailsFamily extends Family<AsyncValue<TvShow>> {
 class TvShowDetailsProvider extends AutoDisposeFutureProvider<TvShow> {
   /// See also [tvShowDetails].
   TvShowDetailsProvider(
-    this.id,
-  ) : super.internal(
+    int id,
+  ) : this._internal(
           (ref) => tvShowDetails(
-            ref,
+            ref as TvShowDetailsRef,
             id,
           ),
           from: tvShowDetailsProvider,
@@ -92,9 +90,43 @@ class TvShowDetailsProvider extends AutoDisposeFutureProvider<TvShow> {
           dependencies: TvShowDetailsFamily._dependencies,
           allTransitiveDependencies:
               TvShowDetailsFamily._allTransitiveDependencies,
+          id: id,
         );
 
+  TvShowDetailsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
   final int id;
+
+  @override
+  Override overrideWith(
+    FutureOr<TvShow> Function(TvShowDetailsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TvShowDetailsProvider._internal(
+        (ref) => create(ref as TvShowDetailsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<TvShow> createElement() {
+    return _TvShowDetailsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -109,5 +141,18 @@ class TvShowDetailsProvider extends AutoDisposeFutureProvider<TvShow> {
     return _SystemHash.finish(hash);
   }
 }
+
+mixin TvShowDetailsRef on AutoDisposeFutureProviderRef<TvShow> {
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _TvShowDetailsProviderElement
+    extends AutoDisposeFutureProviderElement<TvShow> with TvShowDetailsRef {
+  _TvShowDetailsProviderElement(super.provider);
+
+  @override
+  int get id => (origin as TvShowDetailsProvider).id;
+}
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

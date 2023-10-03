@@ -6,7 +6,7 @@ part 'movie.provider.g.dart';
 
 @riverpod
 Future<Movie> movieDetails(MovieDetailsRef ref, int id) async {
-  final tmdb = ref.read(tmdbApiProvider);
+  final tmdb = await ref.read(tmdbApiProvider.future);
   final response =
       await tmdb.v3.movies.getDetails(id, appendToResponse: 'credits');
   return Movie.fromJson(response as Map<String, dynamic>);

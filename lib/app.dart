@@ -15,9 +15,8 @@ class App extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       routerConfig: _appRouter.config(),
-      // routerDelegate: _appRouter.delegate(),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Action',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.black, brightness: Brightness.light),

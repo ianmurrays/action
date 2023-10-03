@@ -31,7 +31,9 @@
     "biography": "Biography",
     "no_biography": "No biography found.",
     "movies": "Movies",
-    "tv_shows": "TV Shows"
+    "tv_shows": "TV Shows",
+    "movies_as_crew": "Movies (as crew)",
+    "tv_shows_as_crew": "TV Shows (as crew)"
   },
   "search": {
     "search": "Search",

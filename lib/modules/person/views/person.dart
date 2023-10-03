@@ -220,7 +220,7 @@ class PersonPage extends HookConsumerWidget {
               ...buildCredits(
                 context,
                 type: CreditType.movie,
-                title: 'Movies (as crew)',
+                title: 'person.movies_as_crew'.tr(),
                 items: (data.movieCredits?.crew ?? [])
                     .map((e) => {
                           'posterPath': e.posterPath,
@@ -233,7 +233,7 @@ class PersonPage extends HookConsumerWidget {
               ...buildCredits(
                 context,
                 type: CreditType.tv,
-                title: 'TV Shows (as crew)',
+                title: 'person.tv_shows_as_crew'.tr(),
                 items: (data.tvCredits?.crew ?? [])
                     .map((e) => {
                           'posterPath': e.posterPath,

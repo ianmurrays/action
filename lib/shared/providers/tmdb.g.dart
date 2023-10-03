@@ -6,11 +6,11 @@ part of 'tmdb.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tmdbApiHash() => r'3ab53b0e266f2af31ea7dfcbf1ff3a73962c3f0b';
+String _$tmdbApiHash() => r'64aca1ad1dc89a93145a900adca1d997cf39ec75';
 
 /// See also [tmdbApi].
 @ProviderFor(tmdbApi)
-final tmdbApiProvider = AutoDisposeProvider<TMDB>.internal(
+final tmdbApiProvider = AutoDisposeFutureProvider<TMDB>.internal(
   tmdbApi,
   name: r'tmdbApiProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final tmdbApiProvider = AutoDisposeProvider<TMDB>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef TmdbApiRef = AutoDisposeProviderRef<TMDB>;
+typedef TmdbApiRef = AutoDisposeFutureProviderRef<TMDB>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

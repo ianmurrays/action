@@ -108,7 +108,7 @@ class SearchPage extends HookConsumerWidget {
                 try {
                   year = DateTime.parse(item.releaseDate!).year.toString();
                 } catch (e) {
-                  year = 'search.unknown'.tr();
+                  year = '';
                 }
 
                 name = item.title!;
@@ -116,7 +116,7 @@ class SearchPage extends HookConsumerWidget {
                 try {
                   year = item.firstAirDate!.year.toString();
                 } catch (e) {
-                  year = 'search.unknown'.tr();
+                  year = '';
                 }
 
                 name = item.name!;
