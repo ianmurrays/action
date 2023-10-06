@@ -1,5 +1,4 @@
 import 'package:action/shared/providers/locale.provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
