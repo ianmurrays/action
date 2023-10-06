@@ -174,22 +174,24 @@ class SearchPage extends HookConsumerWidget {
                 ref.read(searchPageControllerProvider.notifier).search(value);
               },
               hintText: 'search.search'.tr(),
-              leading: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.chevron_left)),
+              leading: searchResultsController.viewState ==
+                      SearchViewState.results
+                  ? IconButton(
+                      onPressed: () {
+                        searchBarTextController.clear();
+                        searchBarFocusNode.requestFocus();
+                        ref.read(searchPageControllerProvider.notifier).reset();
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                      ),
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.chevron_left)),
               trailing: [
-                if (searchResultsController.viewState ==
-                    SearchViewState.results)
-                  IconButton(
-                    onPressed: () {
-                      searchBarTextController.clear();
-                      searchBarFocusNode.requestFocus();
-                      ref.read(searchPageControllerProvider.notifier).reset();
-                    },
-                    icon: const Icon(Icons.close),
-                  ),
                 if (searchResultsController.viewState ==
                     SearchViewState.searching)
                   const Padding(
