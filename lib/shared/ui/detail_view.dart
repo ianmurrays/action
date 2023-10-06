@@ -8,6 +8,7 @@ import 'package:action/shared/models/cast.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
@@ -47,23 +48,32 @@ class DetailView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    isLightMode() => Theme.of(context).brightness == Brightness.light;
+
     final titleOpacity = useState(0.0);
     final showAllSummary = useState(false);
     final scrollController = PrimaryScrollController.of(context);
+    final systemUiOverlayStyle = useState(SystemUiOverlayStyle.light);
 
     useEffect(() {
-      scrollController.addListener(() {
+      void listener() {
         if (scrollController.offset > 250) {
           titleOpacity.value = min(1, (scrollController.offset - 250) / 100);
+          systemUiOverlayStyle.value = isLightMode()
+              ? SystemUiOverlayStyle.dark
+              : SystemUiOverlayStyle.light;
         } else {
           titleOpacity.value = 0.0;
+          systemUiOverlayStyle.value = isLightMode()
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.light;
         }
-      });
+      }
 
-      return null;
+      scrollController.addListener(listener);
+
+      return () => scrollController.removeListener(listener);
     }, []);
-
-    final isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
       floatingActionButton: const SearchFloatingActionButton(),
@@ -71,9 +81,10 @@ class DetailView extends HookConsumerWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
+            systemOverlayStyle: systemUiOverlayStyle.value,
             foregroundColor: titleOpacity.value <= 0.1
                 ? Colors.white
-                : (isLightMode ? Colors.black : Colors.white),
+                : (isLightMode() ? Colors.black : Colors.white),
             actions: [
               buildPinButton(context),
               IconButton(
@@ -97,7 +108,7 @@ class DetailView extends HookConsumerWidget {
             title: Text(
               title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: isLightMode
+                  color: isLightMode()
                       ? Colors.black.withOpacity(titleOpacity.value)
                       : Colors.white.withOpacity(titleOpacity.value)),
             ),
