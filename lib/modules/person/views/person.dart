@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
+import 'package:action/shared/models/person.dart';
 import 'package:action/shared/ui/error_screen.dart';
 import 'package:action/shared/ui/open_website_menu.dart';
 import 'package:action/shared/ui/pin_button.dart';
@@ -88,8 +89,7 @@ class PersonPage extends HookConsumerWidget {
       String? deathday;
 
       if (data.deathday != null) {
-        deathday =
-            DateFormat.yMMMMd().format(data.deathday!);
+        deathday = DateFormat.yMMMMd().format(data.deathday!);
       }
 
       return Scaffold(
@@ -155,7 +155,7 @@ class PersonPage extends HookConsumerWidget {
                           if (age != null)
                             ..._personalDetail(context,
                                 label: 'person.birthday'.tr(),
-                              value: "$birthday ($age years old)"),
+                                value: "$birthday ($age years old)"),
                           ..._personalDetail(context,
                               label: 'person.place_of_birth'.tr(),
                               value: data.placeOfBirth ?? 'Unknown'),
@@ -204,6 +204,7 @@ class PersonPage extends HookConsumerWidget {
                           'posterPath': e.posterPath,
                           'title': e.originalTitle,
                           'subtitle': e.character,
+                          'date': e.releaseDate,
                           'id': e.id,
                         })
                     .toList(),
@@ -217,6 +218,7 @@ class PersonPage extends HookConsumerWidget {
                           'posterPath': e.posterPath,
                           'title': e.originalName,
                           'subtitle': e.character,
+                          'date': e.firstAirDate,
                           'id': e.id,
                         })
                     .toList(),
@@ -230,6 +232,7 @@ class PersonPage extends HookConsumerWidget {
                           'posterPath': e.posterPath,
                           'title': e.originalTitle,
                           'subtitle': e.job,
+                          'date': e.releaseDate,
                           'id': e.id,
                         })
                     .toList(),
@@ -243,6 +246,7 @@ class PersonPage extends HookConsumerWidget {
                           'posterPath': e.posterPath,
                           'title': e.originalName,
                           'subtitle': e.job,
+                          'date': e.firstAirDate,
                           'id': e.id,
                         })
                     .toList(),
@@ -254,8 +258,8 @@ class PersonPage extends HookConsumerWidget {
     });
   }
 
-  List<Widget> buildCredits(BuildContext context,
-      {
+  List<Widget> buildCredits(
+    BuildContext context, {
     required String title,
     required List<Map<String, dynamic>> items,
     required CreditType type,
@@ -263,6 +267,15 @@ class PersonPage extends HookConsumerWidget {
     if (items.isEmpty) {
       return [];
     }
+
+    final sortedItems = items
+      ..sort((a, b) {
+        if (a['date'] == null || b['date'] == null) {
+          return 0;
+        }
+
+        return b['date'].compareTo(a['date']);
+      });
 
     return [
       Padding(
@@ -277,9 +290,9 @@ class PersonPage extends HookConsumerWidget {
         child: ListView.builder(
           padding: const EdgeInsets.only(right: 5, left: 5),
           scrollDirection: Axis.horizontal,
-          itemCount: items.length,
+          itemCount: sortedItems.length,
           itemBuilder: (context, index) {
-            final item = items[index];
+            final item = sortedItems[index];
 
             return TitleSubtitleTile(
               imagePath: item['posterPath'],
