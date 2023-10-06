@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
+import 'package:action/shared/ui/error_screen.dart';
 import 'package:action/shared/ui/open_website_menu.dart';
 import 'package:action/shared/ui/pin_button.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
@@ -69,7 +70,9 @@ class PersonPage extends HookConsumerWidget {
       debugPrint(e.toString());
       debugPrint(stack.toString());
 
-      return const Scaffold();
+      return ErrorScreen(
+        message: 'person.error'.tr(),
+      );
     }, loading: () {
       return _LoadingScreen();
     }, data: (data) {

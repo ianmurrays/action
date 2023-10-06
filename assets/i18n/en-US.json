@@ -39,7 +39,8 @@
     "movies": "Movies",
     "tv_shows": "TV Shows",
     "movies_as_crew": "Movies (as crew)",
-    "tv_shows_as_crew": "TV Shows (as crew)"
+    "tv_shows_as_crew": "TV Shows (as crew)",
+    "error": "An error occurred while loading the person."
   },
   "search": {
     "search": "Search",

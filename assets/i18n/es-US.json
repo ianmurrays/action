@@ -39,7 +39,8 @@
     "movies": "Películas",
     "tv_shows": "Series",
     "movies_as_crew": "Películas (como equipo)",
-    "tv_shows_as_crew": "Series (como equipo)"
+    "tv_shows_as_crew": "Series (como equipo)",
+    "error": "Ocurrió un error al cargar la persona."
   },
   "search": {
     "search": "Buscar",

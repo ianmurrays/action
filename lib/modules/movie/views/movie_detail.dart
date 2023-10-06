@@ -1,6 +1,7 @@
 import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/movie/providers/movie.provider.dart';
 import 'package:action/shared/ui/detail_view.dart';
+import 'package:action/shared/ui/error_screen.dart';
 import 'package:action/shared/ui/pin_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,7 +21,9 @@ class MovieDetailPage extends HookConsumerWidget {
     final movie = ref.watch(movieDetailsProvider(movieId));
 
     return movie.when(
-      error: (_, __) => const _ErrorScreen(),
+      error: (_, __) => ErrorScreen(
+        message: 'movie_detail.error'.tr(),
+      ),
       loading: () => _LoadingScreen(),
       data: (data) {
         // convert running time to hours and minutes
@@ -143,34 +146,6 @@ class MovieDetailPage extends HookConsumerWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _ErrorScreen extends StatelessWidget {
-  const _ErrorScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              (['😢', '😓', '🫠', '🙃']..shuffle()).first,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'movie_detail.error',
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ).tr(),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -1,12 +1,12 @@
 import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/tv_show/providers/tv_show.provider.dart';
 import 'package:action/shared/ui/detail_view.dart';
+import 'package:action/shared/ui/error_screen.dart';
 import 'package:action/shared/ui/pin_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
@@ -21,7 +21,9 @@ class TVShowDetailPage extends HookConsumerWidget {
     final show = ref.watch(tvShowDetailsProvider(tvShowId));
 
     return show.when(
-      error: (_, __) => const _ErrorScreen(),
+      error: (_, __) => ErrorScreen(
+        message: 'tv_show_detail.error'.tr(),
+      ),
       loading: () => _LoadingScreen(),
       data: (data) {
         return DetailView(
@@ -137,34 +139,6 @@ class TVShowDetailPage extends HookConsumerWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _ErrorScreen extends StatelessWidget {
-  const _ErrorScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              (['😢', '😓', '🫠', '🙃']..shuffle()).first,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'tv_show_detail.error',
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ).tr(),
-          ],
-        ),
-      ),
     );
   }
 }
