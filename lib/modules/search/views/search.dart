@@ -89,6 +89,7 @@ class SearchPage extends HookConsumerWidget {
                 icon: Icons.person,
                 width: MediaQuery.of(context).size.width / 3 - 2 * 4,
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
+                maxLines: 2,
                 onTap: () {
                   ref.read(recentTapsProvider.notifier).addRecentTap(
                         RecentSearch()
@@ -136,7 +137,7 @@ class SearchPage extends HookConsumerWidget {
                   ref.read(recentTapsProvider.notifier).addRecentTap(
                         RecentSearch()
                           ..tmdbId = item.id
-                          ..title = item.title
+                          ..title = name
                           ..posterPath = item.posterPath
                           ..voteAverage = item.voteAverage
                           ..year = year

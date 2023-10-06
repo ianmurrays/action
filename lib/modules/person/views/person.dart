@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:action/isar/models/pin.dart';
 import 'package:action/modules/person/providers/person.provider.dart';
 import 'package:action/router/app_router.dart';
-import 'package:action/shared/models/person.dart';
 import 'package:action/shared/ui/error_screen.dart';
 import 'package:action/shared/ui/open_website_menu.dart';
 import 'package:action/shared/ui/pin_button.dart';

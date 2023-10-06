@@ -10,6 +10,7 @@ class TitleSubtitleTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final IconData icon;
+  final int maxLines;
 
   final double width;
   final double height;
@@ -24,6 +25,7 @@ class TitleSubtitleTile extends StatelessWidget {
     this.width = 140,
     this.height = 210,
     this.icon = Icons.image,
+    this.maxLines = 1,
   });
 
   @override
@@ -40,12 +42,12 @@ class TitleSubtitleTile extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8, left: 5),
           child: Text(
             title,
-            maxLines: 1,
+            maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
-        if (subtitle != null)
+        if (subtitle != null && maxLines == 1)
           Padding(
             padding: const EdgeInsets.only(left: 5),
             child: Text(

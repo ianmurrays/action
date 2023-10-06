@@ -66,6 +66,7 @@ class LatestTappedResults extends HookConsumerWidget {
               title: item.title!,
               width: MediaQuery.of(context).size.width / 3 - 2 * 4,
               height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
+              maxLines: 2,
               onTap: () {
                 AutoRouter.of(context)
                     .push(PersonRoute(personId: item.tmdbId!));
