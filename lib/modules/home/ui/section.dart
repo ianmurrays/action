@@ -1,6 +1,6 @@
-import 'package:action/shared/ui/movie_tile.dart';
+import 'package:action/shared/ui/content_tile.dart';
 import 'package:action/router/app_router.dart';
-import 'package:action/shared/ui/poster_tile.dart';
+import 'package:action/shared/ui/title_subtitle_tile.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +49,7 @@ class Section extends StatelessWidget {
             height: 295,
             child: ListView.builder(
               prototypeItem:
-                  const MovieTile(title: '', year: '', voteAverage: 0),
+                  const ContentTile(title: '', year: '', voteAverage: 0),
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               itemCount: entries.length,
@@ -64,7 +64,7 @@ class Section extends StatelessWidget {
 
                 if (entry.type == EntryType.movie ||
                     entry.type == EntryType.tv) {
-                  return MovieTile(
+                  return ContentTile(
                     posterPath: posterPath,
                     title: title,
                     year: year.toString(),
@@ -80,7 +80,7 @@ class Section extends StatelessWidget {
                     },
                   );
                 } else {
-                  return PosterTile(
+                  return TitleSubtitleTile(
                     imagePath: posterPath,
                     title: title,
                     onTap: () {

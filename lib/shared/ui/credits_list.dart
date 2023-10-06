@@ -1,4 +1,4 @@
-import 'package:action/shared/ui/poster_tile.dart';
+import 'package:action/shared/ui/title_subtitle_tile.dart';
 import 'package:action/shared/models/cast.dart';
 import 'package:action/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
@@ -38,7 +38,7 @@ class CreditsList extends StatelessWidget {
             subtitle = "";
           }
 
-          return PosterTile(
+          return TitleSubtitleTile(
             key: ValueKey(id),
             imagePath: imagePath,
             title: title!,

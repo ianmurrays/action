@@ -1,8 +1,8 @@
 import 'package:action/isar/models/recent_search.dart';
 import 'package:action/modules/search/providers/recent_taps.provider.dart';
 import 'package:action/router/app_router.dart';
-import 'package:action/shared/ui/movie_tile.dart';
-import 'package:action/shared/ui/poster_tile.dart';
+import 'package:action/shared/ui/content_tile.dart';
+import 'package:action/shared/ui/title_subtitle_tile.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,7 +33,7 @@ class LatestTappedResults extends HookConsumerWidget {
           final item = taps[index];
 
           if (item.type == SearchType.person) {
-            return PosterTile(
+            return TitleSubtitleTile(
                 imagePath: item.posterPath,
                 title: item.title!,
                 width: MediaQuery.of(context).size.width / 3 - 2 * 4,
@@ -47,7 +47,7 @@ class LatestTappedResults extends HookConsumerWidget {
             final title = item.title ?? '';
             final year = item.year;
 
-            return MovieTile(
+            return ContentTile(
               posterPath: posterPath,
               title: title,
               year: year.toString(),

@@ -2,8 +2,8 @@ import 'package:action/isar/models/recent_search.dart';
 import 'package:action/modules/search/providers/recent_taps.provider.dart';
 import 'package:action/modules/search/ui/latest_searches.dart';
 import 'package:action/modules/search/ui/latest_tapped_results.dart';
-import 'package:action/shared/ui/movie_tile.dart';
-import 'package:action/shared/ui/poster_tile.dart';
+import 'package:action/shared/ui/content_tile.dart';
+import 'package:action/shared/ui/title_subtitle_tile.dart';
 import 'package:action/shared/models/search.dart';
 import 'package:action/modules/search/models/search_state.dart';
 import 'package:action/modules/search/providers/search_page_controller.dart';
@@ -35,7 +35,8 @@ class SearchPage extends HookConsumerWidget {
     useEffect(() {
       scrollViewController.addListener(() {
         if (scrollViewController.position.pixels ==
-            scrollViewController.position.maxScrollExtent) {
+                scrollViewController.position.maxScrollExtent &&
+            searchResultsController.viewState == SearchViewState.results) {
           ref.read(searchPageControllerProvider.notifier).searchMore();
         }
       });
@@ -82,7 +83,7 @@ class SearchPage extends HookConsumerWidget {
 
             // If it's a person we use the PosterTile, if it's a movie or a show we use the MovieTile
             if (item.mediaType == MediaType.person) {
-              return PosterTile(
+              return TitleSubtitleTile(
                 imagePath: item.profilePath,
                 title: item.name!,
                 icon: Icons.person,
@@ -123,7 +124,7 @@ class SearchPage extends HookConsumerWidget {
                 name = item.name!;
               }
 
-              return MovieTile(
+              return ContentTile(
                 posterPath: item.posterPath,
                 title: name,
                 year: year,

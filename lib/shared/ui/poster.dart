@@ -11,8 +11,8 @@ class Poster extends StatelessWidget {
   const Poster({
     super.key,
     required this.imagePath,
-    this.width = 110,
-    this.height = 145,
+    required this.width,
+    required this.height,
     this.icon,
   });
 
