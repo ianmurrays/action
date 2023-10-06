@@ -40,6 +40,12 @@ class RecentTaps extends _$RecentTaps {
           .deleteAll();
     });
   }
+
+  Future<void> removeRecentTap(RecentSearch recentSearch) async {
+    return await _db.writeTxn(() async {
+      await _db.recentSearches.delete(recentSearch.id);
+    });
+  }
 }
 
 @riverpod

@@ -6,6 +6,7 @@ typedef OnTapCallback = void Function();
 /// A widget that displays a movie/show tile.
 class ContentTile extends StatelessWidget {
   final OnTapCallback? onTap;
+  final OnLongPressCallback? onLongPress;
   final String? posterPath;
   final String title;
   final String year;
@@ -18,6 +19,7 @@ class ContentTile extends StatelessWidget {
   const ContentTile({
     super.key,
     this.onTap,
+    this.onLongPress,
     this.posterPath,
     required this.title,
     required this.year,
@@ -31,6 +33,7 @@ class ContentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PosterTile(
       onTap: onTap,
+      onLongPress: onLongPress,
       posterPath: posterPath,
       width: width,
       height: height,

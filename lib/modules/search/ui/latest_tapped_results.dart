@@ -19,6 +19,34 @@ class LatestTappedResults extends HookConsumerWidget {
 
     final taps = recentTaps.value!;
 
+    removeFromRecentTaps(RecentSearch recentSearch) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Remove from recent taps?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  ref
+                      .read(recentTapsProvider.notifier)
+                      .removeRecentTap(recentSearch);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Remove'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       sliver: SliverGrid.builder(
@@ -34,14 +62,18 @@ class LatestTappedResults extends HookConsumerWidget {
 
           if (item.type == SearchType.person) {
             return TitleSubtitleTile(
-                imagePath: item.posterPath,
-                title: item.title!,
-                width: MediaQuery.of(context).size.width / 3 - 2 * 4,
-                height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
-                onTap: () {
-                  AutoRouter.of(context)
-                      .push(PersonRoute(personId: item.tmdbId!));
-                });
+              imagePath: item.posterPath,
+              title: item.title!,
+              width: MediaQuery.of(context).size.width / 3 - 2 * 4,
+              height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
+              onTap: () {
+                AutoRouter.of(context)
+                    .push(PersonRoute(personId: item.tmdbId!));
+              },
+              onLongPress: () {
+                removeFromRecentTaps(item);
+              },
+            );
           } else {
             final posterPath = item.posterPath;
             final title = item.title ?? '';
@@ -64,6 +96,9 @@ class LatestTappedResults extends HookConsumerWidget {
                   AutoRouter.of(context)
                       .push(MovieDetailRoute(movieId: item.tmdbId!));
                 }
+              },
+              onLongPress: () {
+                removeFromRecentTaps(item);
               },
             );
           }

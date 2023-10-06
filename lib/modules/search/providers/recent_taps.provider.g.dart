@@ -22,7 +22,7 @@ final watchRecentTapsProvider =
 );
 
 typedef WatchRecentTapsRef = AutoDisposeStreamProviderRef<List<RecentSearch>>;
-String _$recentTapsHash() => r'7a51ecf389c498b01b120ea5e2000e7c9fbefa65';
+String _$recentTapsHash() => r'f891eb433e3fd4d2bd1ea832ac599bfacb3e4314';
 
 /// See also [RecentTaps].
 @ProviderFor(RecentTaps)

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 /// Used for cast and crew, and movie/show for a specific person.
 class TitleSubtitleTile extends StatelessWidget {
   final OnTapCallback? onTap;
+  final OnLongPressCallback? onLongPress;
   final String? imagePath;
   final String title;
   final String? subtitle;
@@ -16,6 +17,7 @@ class TitleSubtitleTile extends StatelessWidget {
   const TitleSubtitleTile({
     super.key,
     this.onTap,
+    this.onLongPress,
     this.imagePath,
     required this.title,
     this.subtitle,
@@ -28,6 +30,7 @@ class TitleSubtitleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PosterTile(
       onTap: onTap,
+      onLongPress: onLongPress,
       posterPath: imagePath,
       width: width,
       height: height,
