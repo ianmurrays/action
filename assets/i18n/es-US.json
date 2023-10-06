@@ -14,6 +14,12 @@
     "cast": "Reparto",
     "crew": "Equipo"
   },
+  "movie_detail": {
+    "error": "Ocurrió un error al cargar la película."
+  },
+  "tv_show_detail": {
+    "error": "Ocurrió un error al cargar la serie."
+  },
   "person": {
     "genders": {
       "not_set": "No especificado",

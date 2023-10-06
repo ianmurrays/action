@@ -3,6 +3,7 @@ import 'package:action/modules/movie/providers/movie.provider.dart';
 import 'package:action/shared/ui/detail_view.dart';
 import 'package:action/shared/ui/pin_button.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
@@ -163,10 +164,10 @@ class _ErrorScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'An error occurred while loading the movie.',
+              'movie_detail.error',
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
-            ),
+            ).tr(),
           ],
         ),
       ),
