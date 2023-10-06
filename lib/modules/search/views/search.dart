@@ -85,6 +85,7 @@ class SearchPage extends HookConsumerWidget {
               return PosterTile(
                 imagePath: item.profilePath,
                 title: item.name!,
+                icon: Icons.person,
                 width: MediaQuery.of(context).size.width / 3 - 2 * 4,
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
                 onTap: () {
@@ -129,6 +130,7 @@ class SearchPage extends HookConsumerWidget {
                 voteAverage: item.voteAverage!,
                 width: MediaQuery.of(context).size.width / 3 - 2 * 4,
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
+                icon: item.mediaType == MediaType.tv ? Icons.tv : Icons.movie,
                 onTap: () {
                   ref.read(recentTapsProvider.notifier).addRecentTap(
                         RecentSearch()

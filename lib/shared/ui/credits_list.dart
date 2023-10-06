@@ -43,6 +43,7 @@ class CreditsList extends StatelessWidget {
             imagePath: imagePath,
             title: title!,
             subtitle: subtitle,
+            icon: Icons.person,
             onTap: () {
               // Navigate to PersonPage
               AutoRouter.of(context).push(PersonRoute(personId: id!));

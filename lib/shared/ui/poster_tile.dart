@@ -10,6 +10,7 @@ class PosterTile extends StatelessWidget {
   final String? imagePath;
   final String title;
   final String? subtitle;
+  final IconData icon;
 
   final double width;
   final double height;
@@ -22,6 +23,7 @@ class PosterTile extends StatelessWidget {
     this.subtitle,
     this.width = 140,
     this.height = 210,
+    this.icon = Icons.image,
   });
 
   @override
@@ -37,7 +39,12 @@ class PosterTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Poster(imagePath: imagePath, height: height, width: width),
+            Poster(
+              imagePath: imagePath,
+              height: height,
+              width: width,
+              icon: icon,
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 5),
               child: Text(

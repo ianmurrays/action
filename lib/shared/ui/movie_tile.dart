@@ -10,6 +10,7 @@ class MovieTile extends StatelessWidget {
   final String title;
   final String year;
   final double voteAverage;
+  final IconData icon;
 
   final double width;
   final double height;
@@ -23,6 +24,7 @@ class MovieTile extends StatelessWidget {
     required this.voteAverage,
     this.width = 140,
     this.height = 210,
+    this.icon = Icons.image,
   });
 
   @override
@@ -42,6 +44,7 @@ class MovieTile extends StatelessWidget {
               imagePath: posterPath,
               width: width,
               height: height,
+              icon: icon,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 5, right: 5),
@@ -57,9 +60,10 @@ class MovieTile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(year,
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Colors.grey,
+                  Text(
+                    year,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.grey,
                         ),
                   ),
                   Row(

@@ -136,6 +136,7 @@ class PersonPage extends HookConsumerWidget {
                       imagePath: data.profilePath,
                       height: 250,
                       width: 166,
+                      icon: Icons.person,
                     ),
                     const SizedBox(width: 10),
                     Expanded(

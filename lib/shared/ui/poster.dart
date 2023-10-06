@@ -6,12 +6,15 @@ class Poster extends StatelessWidget {
   final String? imagePath;
   final double width;
   final double height;
+  final IconData? icon;
 
-  const Poster(
-      {super.key,
-      required this.imagePath,
-      this.width = 110,
-      this.height = 145});
+  const Poster({
+    super.key,
+    required this.imagePath,
+    this.width = 110,
+    this.height = 145,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,13 @@ class Poster extends StatelessWidget {
             ),
             height: height,
             width: width,
+            child: icon != null
+                ? Icon(
+                    icon,
+                    color: Colors.grey,
+                    size: 50,
+                  )
+                : null,
           )
         : Container(
             decoration: BoxDecoration(

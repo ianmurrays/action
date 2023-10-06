@@ -52,6 +52,7 @@ class LatestTappedResults extends HookConsumerWidget {
               title: title,
               year: year.toString(),
               voteAverage: item.voteAverage!,
+              icon: item.type == SearchType.movie ? Icons.movie : Icons.tv,
               width:
                   MediaQuery.of(context).size.width / 3 - 2 * 4, // see delegate
               height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,

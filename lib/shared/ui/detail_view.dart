@@ -158,6 +158,7 @@ class DetailView extends HookConsumerWidget {
                                 imagePath: posterPath,
                                 height: 180,
                                 width: 120,
+                                icon: isMovie ? Icons.movie : Icons.tv,
                               ),
                             ),
                             const SizedBox(height: 10),
