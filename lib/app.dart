@@ -19,12 +19,12 @@ class App extends StatelessWidget {
       title: 'Action',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.black, brightness: Brightness.light),
+            seedColor: Colors.orange, brightness: Brightness.light),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.white, brightness: Brightness.dark),
+            seedColor: Colors.orange, brightness: Brightness.dark),
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
