@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:action/shared/ui/credits_list.dart';
+import 'package:action/shared/ui/long_press_back_button.dart';
 import 'package:action/shared/ui/open_website_menu.dart';
 import 'package:action/shared/ui/poster.dart';
 import 'package:action/shared/models/cast.dart';
@@ -85,6 +86,7 @@ class DetailView extends HookConsumerWidget {
             foregroundColor: titleOpacity.value <= 0.1
                 ? Colors.white
                 : (isLightMode() ? Colors.black : Colors.white),
+            leading: const LongPressBackButton(),
             actions: [
               buildPinButton(context),
               IconButton(
