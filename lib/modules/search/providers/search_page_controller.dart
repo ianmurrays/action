@@ -48,17 +48,18 @@ class SearchPageController extends _$SearchPageController {
     final results =
         page == 1 ? searchQuery.results : state.results! + searchQuery.results!;
 
-    // store this search query
-    await ref.read(searchItemsServiceProvider.notifier).addSearchItem(
-          SearchItem()..query = query,
-        );
-
     state = state.copyWith(
       viewState: SearchViewState.results,
       searchQuery: searchQuery,
       results: results,
       loadingMore: false,
     );
+  }
+
+  Future addSearchItem(String query) async {
+    return ref.read(searchItemsServiceProvider.notifier).addSearchItem(
+          SearchItem()..query = query,
+        );
   }
 
   void searchMore() {

@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:action/isar/models/recent_search.dart';
+import 'package:action/isar/models/search_item.dart';
 import 'package:action/modules/search/providers/recent_taps.provider.dart';
+import 'package:action/modules/search/providers/search_items.provider.dart';
 import 'package:action/modules/search/ui/latest_searches.dart';
 import 'package:action/modules/search/ui/latest_tapped_results.dart';
 import 'package:action/shared/ui/content_tile.dart';
@@ -43,6 +47,12 @@ class SearchPage extends HookConsumerWidget {
 
       return null;
     }, []);
+
+    Future storeSearchItem() {
+      return ref.read(searchItemsServiceProvider.notifier).addSearchItem(
+            SearchItem()..query = searchBarTextController.text,
+          );
+    }
 
     Widget buildEmptyResults() {
       return SliverFillRemaining(
@@ -91,6 +101,8 @@ class SearchPage extends HookConsumerWidget {
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
                 maxLines: 2,
                 onTap: () {
+                  storeSearchItem();
+
                   ref.read(recentTapsProvider.notifier).addRecentTap(
                         RecentSearch()
                           ..tmdbId = item.id
@@ -134,6 +146,8 @@ class SearchPage extends HookConsumerWidget {
                 height: (MediaQuery.of(context).size.width / 3 - 2 * 8) * 1.5,
                 icon: item.mediaType == MediaType.tv ? Icons.tv : Icons.movie,
                 onTap: () {
+                  storeSearchItem();
+
                   ref.read(recentTapsProvider.notifier).addRecentTap(
                         RecentSearch()
                           ..tmdbId = item.id
@@ -161,6 +175,8 @@ class SearchPage extends HookConsumerWidget {
       );
     }
 
+    final cancelTimer = useState<Timer?>(null);
+
     return Scaffold(
       body: CustomScrollView(
         controller: scrollViewController,
@@ -171,6 +187,16 @@ class SearchPage extends HookConsumerWidget {
             title: SearchBar(
               focusNode: searchBarFocusNode,
               controller: searchBarTextController,
+              onChanged: (value) {
+                if (cancelTimer.value?.isActive ?? false) {
+                  cancelTimer.value!.cancel();
+                }
+
+                cancelTimer.value =
+                    Timer(const Duration(milliseconds: 300), () {
+                  ref.read(searchPageControllerProvider.notifier).search(value);
+                });
+              },
               onSubmitted: (value) {
                 ref.read(searchPageControllerProvider.notifier).search(value);
               },
