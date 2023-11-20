@@ -1,5 +1,6 @@
 import 'package:action/modules/home/ui/section.dart';
 import 'package:action/modules/home/providers/home.provider.dart';
+import 'package:action/modules/settings/views/settings.dart';
 import 'package:action/router/app_router.dart';
 import 'package:action/shared/providers/pin.provider.dart';
 import 'package:action/shared/ui/search_floating_action_button.dart';
@@ -8,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:action/shared/ui/blurred_app_bar.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
@@ -22,127 +24,142 @@ class HomePage extends HookConsumerWidget {
     final popularTvShows = ref.watch(popularTvShowsProvider);
     final topRatedTvShows = ref.watch(topRatedTvShowsProvider);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: BlurredAppBar(
-        leading: IconButton(
-          onPressed: () {
-            AutoRouter.of(context).push(const SearchRoute());
-          },
-          icon: const Icon(Icons.search),
-        ),
-      ),
-      floatingActionButton: const SearchFloatingActionButton(),
-      body: RefreshIndicator.adaptive(
-        edgeOffset: 110,
-        onRefresh: () {
-          return Future.wait([
-            ref.refresh(popularMoviesProvider.future),
-            ref.refresh(upcomingMoviesProvider.future),
-            ref.refresh(popularTvShowsProvider.future),
-            ref.refresh(topRatedTvShowsProvider.future),
-          ]);
-        },
-        child: CustomScrollView(
-          slivers: [
-            const SliverPadding(padding: EdgeInsets.only(top: 120)),
-            pins.maybeWhen(
-              data: (pins) {
-                if (pins.isEmpty) {
-                  return const SliverToBoxAdapter();
-                }
-
-                return Section(
-                  title: "home.pinned_items".tr(),
-                  entries: pins
-                      .map((pin) => Entry(
-                            id: pin.tmdbId!,
-                            title: pin.title!,
-                            posterPath: pin.posterPath,
-                            year: pin.year,
-                            voteAverage: pin.voteAverage,
-                            // these two enums match each other, hence we can do this
-                            type: EntryType.values[pin.type.index],
-                          ))
-                      .toList(),
+    return CupertinoScaffold(
+      body: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: BlurredAppBar(
+          leading: IconButton(
+            onPressed: () {
+              AutoRouter.of(context).push(const SearchRoute());
+            },
+            icon: const Icon(Icons.search),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showCupertinoModalBottomSheet(
+                  context: context,
+                  isDismissible: false,
+                  transitionBackgroundColor: Colors.transparent,
+                  builder: (context) => const SettingsPage(),
                 );
               },
-              orElse: () => const _LoadingSection(),
-            ),
-            popularMovies.maybeWhen(
-              data: (movies) {
-                return Section(
-                  title: "home.popular_movies".tr(),
-                  entries: movies
-                      .map((movie) => Entry(
-                            id: movie.id!,
-                            title: movie.title!,
-                            posterPath: movie.posterPath,
-                            year: movie.releaseDate!.year.toString(),
-                            voteAverage: movie.voteAverage!,
-                            type: EntryType.movie,
-                          ))
-                      .toList(),
-                );
-              },
-              orElse: () => const _LoadingSection(),
-            ),
-            upcomingMovies.maybeWhen(
-              data: (movies) {
-                return Section(
-                  title: "home.upcoming_movies".tr(),
-                  entries: movies
-                      .map((movie) => Entry(
-                            id: movie.id!,
-                            title: movie.title!,
-                            posterPath: movie.posterPath,
-                            year: movie.releaseDate!.year.toString(),
-                            voteAverage: movie.voteAverage!,
-                            type: EntryType.movie,
-                          ))
-                      .toList(),
-                );
-              },
-              orElse: () => const _LoadingSection(),
-            ),
-            popularTvShows.maybeWhen(
-              data: (tvShows) {
-                return Section(
-                  title: "home.popular_tv_shows".tr(),
-                  entries: tvShows
-                      .map((tvShow) => Entry(
-                            id: tvShow.id!,
-                            title: tvShow.name!,
-                            posterPath: tvShow.posterPath,
-                            year: tvShow.firstAirDate!.year.toString(),
-                            voteAverage: tvShow.voteAverage!,
-                            type: EntryType.tv,
-                          ))
-                      .toList(),
-                );
-              },
-              orElse: () => const _LoadingSection(),
-            ),
-            topRatedTvShows.maybeWhen(
-              data: (tvShows) {
-                return Section(
-                  title: "home.top_rated_tv_shows".tr(),
-                  entries: tvShows
-                      .map((tvShow) => Entry(
-                            id: tvShow.id!,
-                            title: tvShow.name!,
-                            posterPath: tvShow.posterPath,
-                            year: tvShow.firstAirDate!.year.toString(),
-                            voteAverage: tvShow.voteAverage!,
-                            type: EntryType.tv,
-                          ))
-                      .toList(),
-                );
-              },
-              orElse: () => const _LoadingSection(),
-            ),
-            const SliverPadding(padding: EdgeInsets.only(bottom: 100)),
+              icon: const Icon(Icons.settings),
+            )
           ],
+        ),
+        floatingActionButton: const SearchFloatingActionButton(),
+        body: RefreshIndicator.adaptive(
+          edgeOffset: 110,
+          onRefresh: () {
+            return Future.wait([
+              ref.refresh(popularMoviesProvider.future),
+              ref.refresh(upcomingMoviesProvider.future),
+              ref.refresh(popularTvShowsProvider.future),
+              ref.refresh(topRatedTvShowsProvider.future),
+            ]);
+          },
+          child: CustomScrollView(
+            slivers: [
+              const SliverPadding(padding: EdgeInsets.only(top: 120)),
+              pins.maybeWhen(
+                data: (pins) {
+                  if (pins.isEmpty) {
+                    return const SliverToBoxAdapter();
+                  }
+
+                  return Section(
+                    title: "home.pinned_items".tr(),
+                    entries: pins
+                        .map((pin) => Entry(
+                              id: pin.tmdbId!,
+                              title: pin.title!,
+                              posterPath: pin.posterPath,
+                              year: pin.year,
+                              voteAverage: pin.voteAverage,
+                              // these two enums match each other, hence we can do this
+                              type: EntryType.values[pin.type.index],
+                            ))
+                        .toList(),
+                  );
+                },
+                orElse: () => const _LoadingSection(),
+              ),
+              popularMovies.maybeWhen(
+                data: (movies) {
+                  return Section(
+                    title: "home.popular_movies".tr(),
+                    entries: movies
+                        .map((movie) => Entry(
+                              id: movie.id!,
+                              title: movie.title!,
+                              posterPath: movie.posterPath,
+                              year: movie.releaseDate!.year.toString(),
+                              voteAverage: movie.voteAverage!,
+                              type: EntryType.movie,
+                            ))
+                        .toList(),
+                  );
+                },
+                orElse: () => const _LoadingSection(),
+              ),
+              upcomingMovies.maybeWhen(
+                data: (movies) {
+                  return Section(
+                    title: "home.upcoming_movies".tr(),
+                    entries: movies
+                        .map((movie) => Entry(
+                              id: movie.id!,
+                              title: movie.title!,
+                              posterPath: movie.posterPath,
+                              year: movie.releaseDate!.year.toString(),
+                              voteAverage: movie.voteAverage!,
+                              type: EntryType.movie,
+                            ))
+                        .toList(),
+                  );
+                },
+                orElse: () => const _LoadingSection(),
+              ),
+              popularTvShows.maybeWhen(
+                data: (tvShows) {
+                  return Section(
+                    title: "home.popular_tv_shows".tr(),
+                    entries: tvShows
+                        .map((tvShow) => Entry(
+                              id: tvShow.id!,
+                              title: tvShow.name!,
+                              posterPath: tvShow.posterPath,
+                              year: tvShow.firstAirDate!.year.toString(),
+                              voteAverage: tvShow.voteAverage!,
+                              type: EntryType.tv,
+                            ))
+                        .toList(),
+                  );
+                },
+                orElse: () => const _LoadingSection(),
+              ),
+              topRatedTvShows.maybeWhen(
+                data: (tvShows) {
+                  return Section(
+                    title: "home.top_rated_tv_shows".tr(),
+                    entries: tvShows
+                        .map((tvShow) => Entry(
+                              id: tvShow.id!,
+                              title: tvShow.name!,
+                              posterPath: tvShow.posterPath,
+                              year: tvShow.firstAirDate!.year.toString(),
+                              voteAverage: tvShow.voteAverage!,
+                              type: EntryType.tv,
+                            ))
+                        .toList(),
+                  );
+                },
+                orElse: () => const _LoadingSection(),
+              ),
+              const SliverPadding(padding: EdgeInsets.only(bottom: 100)),
+            ],
+          ),
         ),
       ),
     );

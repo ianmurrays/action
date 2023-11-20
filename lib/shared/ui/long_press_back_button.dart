@@ -1,13 +1,18 @@
+import 'package:action/shared/providers/settings.provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LongPressBackButton extends StatelessWidget {
+class LongPressBackButton extends HookConsumerWidget {
   const LongPressBackButton({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fastHome = ref.watch(fastHomeProvider);
+
     return InkWell(
       customBorder: const CircleBorder(),
       child: const InkWell(child: Icon(Icons.arrow_back_ios)),
@@ -15,7 +20,13 @@ class LongPressBackButton extends StatelessWidget {
         AutoRouter.of(context).pop();
       },
       onLongPress: () {
-        AutoRouter.of(context).popUntilRoot();
+        if (fastHome.valueOrNull == true) {
+          HapticFeedback.heavyImpact();
+
+          AutoRouter.of(context).popUntilRoot();
+        } else {
+          AutoRouter.of(context).pop();
+        }
       },
     );
   }

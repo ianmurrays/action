@@ -46,5 +46,13 @@
     "search": "Search",
     "no_results": "No results found.",
     "unknown": "Unknown"
+  },
+  "settings": {
+    "fastHome": {
+      "title": "Hold back button for home",
+      "description": "Hold the back button to go to home screen, no matter how deep you are in the app you are."
+    },
+    "about": "About",
+    "no_guarantees": "This app comes with no guarantees."
   }
 }
