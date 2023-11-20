@@ -1,16 +1,23 @@
 # action
 
-A new Flutter project.
+Flutter app to query movie and tv shows cast from the TMDB API. The app is a work in progress.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- 🎬 Search for movies and tv shows
+- 🙋 List cast and crew
+- ❤️ Pin favourite movies and tv shows to the home screen
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<table>
+  <tr>
+    <td><img src="screenshots/screenshot_1.png" /></td>
+    <td><img src="screenshots/screenshot_2.png" /></td>
+    <td><img src="screenshots/screenshot_3.png" /></td>
+  </tr>
+</table>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## LICENSE
+
+[MIT License](LICENSE)
