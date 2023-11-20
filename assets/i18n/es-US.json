@@ -1,0 +1,58 @@
+{
+  "home": {
+    "pinned_items": "Favoritos",
+    "popular_movies": "Películas Populares",
+    "upcoming_movies": "Próximas Películas",
+    "popular_tv_shows": "Series Populares",
+    "top_rated_tv_shows": "Series Mejor Valoradas"
+  },
+  "detail": {
+    "open_in_tmdb": "Abrir en TMDB",
+    "open_in_imdb": "Abrir en IMDb",
+    "summary": "Resumen",
+    "no_summary": "No hay resumen disponible.",
+    "cast": "Reparto",
+    "crew": "Equipo"
+  },
+  "movie_detail": {
+    "error": "Ocurrió un error al cargar la película."
+  },
+  "tv_show_detail": {
+    "error": "Ocurrió un error al cargar la serie."
+  },
+  "person": {
+    "genders": {
+      "not_set": "No especificado",
+      "female": "Femenino",
+      "male": "Masculino",
+      "non_binary": "No binario",
+      "unknown": "Desconocido"
+    },
+    "unknown": "Desconocido",
+    "known_for": "Conocido por",
+    "gender": "Género",
+    "birthday": "Fecha de Nacimiento",
+    "place_of_birth": "Lugar de Nacimiento",
+    "deathday": "Fecha de Fallecimiento",
+    "biography": "Biografía",
+    "no_biography": "No hay biografía disponible.",
+    "movies": "Películas",
+    "tv_shows": "Series",
+    "movies_as_crew": "Películas (como equipo)",
+    "tv_shows_as_crew": "Series (como equipo)",
+    "error": "Ocurrió un error al cargar la persona."
+  },
+  "search": {
+    "search": "Buscar",
+    "no_results": "No se encontraron resultados.",
+    "unknown": "Desconocido"
+  },
+  "settings": {
+    "fastHome": {
+      "title": "Regreso rápido al inicio",
+      "description": "Mantener presionado el botón para volver a la pantalla de inicio."
+    },
+    "about": "Acerca de",
+    "no_guarantees": "Esta aplicación viene sin garantías."
+  }
+}

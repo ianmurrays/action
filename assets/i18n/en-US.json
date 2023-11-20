@@ -1,0 +1,58 @@
+{
+  "home": {
+    "pinned_items": "Pinned Items",
+    "popular_movies": "Popular Movies",
+    "upcoming_movies": "Upcoming Movies",
+    "popular_tv_shows": "Popular TV Shows",
+    "top_rated_tv_shows": "Top Rated TV Shows"
+  },
+  "detail": {
+    "open_in_tmdb": "Open in TMDB",
+    "open_in_imdb": "Open in IMDB",
+    "summary": "Summary",
+    "no_summary": "No summary available.",
+    "cast": "Cast",
+    "crew": "Crew"
+  },
+  "movie_detail": {
+    "error": "An error occurred while loading the movie."
+  },
+  "tv_show_detail": {
+    "error": "An error occurred while loading the show."
+  },
+  "person": {
+    "genders": {
+      "not_set": "Not set / not specified",
+      "female": "Female",
+      "male": "Male",
+      "non_binary": "Non-binary",
+      "unknown": "Unknown"
+    },
+    "unknown": "Unknown",
+    "known_for": "Known For",
+    "gender": "Gender",
+    "birthday": "Birthday",
+    "place_of_birth": "Place of Birth",
+    "deathday": "Died",
+    "biography": "Biography",
+    "no_biography": "No biography found.",
+    "movies": "Movies",
+    "tv_shows": "TV Shows",
+    "movies_as_crew": "Movies (as crew)",
+    "tv_shows_as_crew": "TV Shows (as crew)",
+    "error": "An error occurred while loading the person."
+  },
+  "search": {
+    "search": "Search",
+    "no_results": "No results found.",
+    "unknown": "Unknown"
+  },
+  "settings": {
+    "fastHome": {
+      "title": "Hold back button for home",
+      "description": "Hold the back button to go to home screen, no matter how deep you are in the app you are."
+    },
+    "about": "About",
+    "no_guarantees": "This app comes with no guarantees."
+  }
+}
